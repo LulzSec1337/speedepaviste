@@ -8,6 +8,15 @@ export default {
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
 	],
+  theme: {
+    extend: {
+      gradientColorStops: {
+        'yellow-gradient-start': '#FFFFFF', 
+        'yellow-gradient-middle': '#FEF9C3',
+        'yellow-gradient-end': '#FACC15',
+      },
+    },
+  },
 	prefix: "",
 	theme: {
 		container: {
