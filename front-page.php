@@ -9,66 +9,95 @@
         <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
           Votre enlèvement d'épave gratuit par un épaviste agréé VHU, c'est ici.
         </h1>
-        
         <p class="text-sm md:text-base text-gray-700 mb-8 max-w-2xl">
           SPEED EPAVISTE vous accompagne dans l'enlèvement de votre épave à domicile 7j/7. Service 100% GRATUIT correspondant à votre besoin de remorquage d'épave. Nous vous créons un certificat de cession de votre véhicule.
         </p>
-        
-        <a href="#contact" class="inline-flex bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-full font-medium">
+        <a href="#contact" class="inline-flex bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-full font-medium animate-fade-in">
           Enlèvement Épave
         </a>
       </div>
     </div>
-    
     <!-- Wave shape at bottom -->
     <div class="absolute bottom-0 left-0 right-0">
-      <svg 
-        viewBox="0 0 1440 120" 
-        fill="none" 
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-full"
-      >
-        <path 
-          d="M0 120H1440V0C1320 40 1080 80 720 80C360 80 120 40 0 0V120Z" 
-          fill="white"
-        />
+      <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+        <path d="M0 120H1440V0C1320 40 1080 80 720 80C360 80 120 40 0 0V120Z" fill="white" />
       </svg>
     </div>
   </div>
 
-  <!-- Feature Section -->
-  <div class="py-16 px-6 bg-white">
+  <!-- Feature Section (cool, more features, more icons) -->
+  <div class="py-16 px-6 bg-white animate-fade-in">
     <div class="max-w-6xl mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         <!-- Feature 1 -->
-        <div class="flex flex-col items-center text-center">
-          <div class="w-14 h-14 rounded-full bg-yellow-300 flex items-center justify-center mb-4">
-            <i class="fas fa-check h-8 w-8 text-white"></i>
+        <div class="flex flex-col items-center text-center p-4 transition-transform hover:scale-105 rounded-xl shadow hover:shadow-lg bg-yellow-50">
+          <div class="w-14 h-14 rounded-full bg-yellow-300 flex items-center justify-center mb-4 animate-pulse">
+            <i class="fas fa-calendar-check text-white text-3xl"></i>
           </div>
-          <h3 class="text-xl font-semibold mb-2">Disponible 7j / 7</h3>
+          <h3 class="text-xl font-semibold mb-2">Disponible 7j/7</h3>
           <p class="text-gray-700">6h / 00h00</p>
         </div>
-        
         <!-- Feature 2 -->
-        <div class="flex flex-col items-center text-center">
-          <div class="w-14 h-14 rounded-full bg-yellow-300 flex items-center justify-center mb-4">
-            <i class="fas fa-check h-8 w-8 text-white"></i>
+        <div class="flex flex-col items-center text-center p-4 transition-transform hover:scale-105 rounded-xl shadow hover:shadow-lg bg-yellow-50">
+          <div class="w-14 h-14 rounded-full bg-yellow-300 flex items-center justify-center mb-4 pulse">
+            <i class="fas fa-phone-alt text-white text-3xl"></i>
           </div>
           <h3 class="text-xl font-semibold mb-2">06 24 93 05 36</h3>
+          <p class="text-gray-700">Ligne directe</p>
         </div>
-        
         <!-- Feature 3 -->
-        <div class="flex flex-col items-center text-center">
-          <div class="w-14 h-14 rounded-full bg-yellow-300 flex items-center justify-center mb-4">
-            <i class="fas fa-check h-8 w-8 text-white"></i>
+        <div class="flex flex-col items-center text-center p-4 transition-transform hover:scale-105 rounded-xl shadow hover:shadow-lg bg-yellow-50">
+          <div class="w-14 h-14 rounded-full bg-yellow-300 flex items-center justify-center mb-4 animate-bounce">
+            <i class="fas fa-bolt text-white text-3xl"></i>
           </div>
-          <h3 class="text-xl font-semibold mb-2">Épaviste gratuit</h3>
-          <p class="text-gray-700">Île-de-France & aux alentours</p>
+          <h3 class="text-xl font-semibold mb-2">Intervention rapide</h3>
+          <p class="text-gray-700">30min à Paris</p>
+        </div>
+        <!-- Feature 4 -->
+        <div class="flex flex-col items-center text-center p-4 transition-transform hover:scale-105 rounded-xl shadow hover:shadow-lg bg-yellow-50">
+          <div class="w-14 h-14 rounded-full bg-yellow-300 flex items-center justify-center mb-4 animate-spin">
+            <i class="fas fa-certificate text-white text-3xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Agréé VHU</h3>
+          <p class="text-gray-700">Certificat de destruction</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mt-10">
+        <!-- Feature 5 -->
+        <div class="flex flex-col items-center text-center p-4 transition-transform hover:scale-105 rounded-xl shadow hover:shadow-lg bg-yellow-50">
+          <div class="w-14 h-14 rounded-full bg-yellow-300 flex items-center justify-center mb-4 animate-spin">
+            <i class="fas fa-leaf text-white text-3xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Respect de l’environnement</h3>
+          <p class="text-gray-700">Traitement écologique</p>
+        </div>
+        <!-- Feature 6 -->
+        <div class="flex flex-col items-center text-center p-4 transition-transform hover:scale-105 rounded-xl shadow hover:shadow-lg bg-yellow-50">
+          <div class="w-14 h-14 rounded-full bg-yellow-300 flex items-center justify-center mb-4 animate-pulse">
+            <i class="fas fa-car-crash text-white text-3xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Tous véhicules</h3>
+          <p class="text-gray-700">Auto, utilitaire, 2 roues…</p>
+        </div>
+        <!-- Feature 7 -->
+        <div class="flex flex-col items-center text-center p-4 transition-transform hover:scale-105 rounded-xl shadow hover:shadow-lg bg-yellow-50">
+          <div class="w-14 h-14 rounded-full bg-yellow-300 flex items-center justify-center mb-4 animate-bounce">
+            <i class="fas fa-map-marker-alt text-white text-3xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Île-de-France</h3>
+          <p class="text-gray-700">+ départements limitrophes</p>
+        </div>
+        <!-- Feature 8 -->
+        <div class="flex flex-col items-center text-center p-4 transition-transform hover:scale-105 rounded-xl shadow hover:shadow-lg bg-yellow-50">
+          <div class="w-14 h-14 rounded-full bg-yellow-300 flex items-center justify-center mb-4 animate-fade-in">
+            <i class="fas fa-thumbs-up text-white text-3xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Satisfaction client</h3>
+          <p class="text-gray-700">2000+ avis positifs</p>
         </div>
       </div>
     </div>
   </div>
-
   <!-- Content Section -->
   <div class="py-16 px-6 bg-white">
     <div class="max-w-6xl mx-auto">
