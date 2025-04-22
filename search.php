@@ -3,10 +3,8 @@
 /**
  * The template for displaying search results pages
  */
-
 get_header();
 ?>
-
 <main id="primary" class="site-main py-8 px-6">
   <div class="max-w-4xl mx-auto">
     <?php if (have_posts()) : ?>
@@ -14,29 +12,20 @@ get_header();
         <h1 class="page-title text-2xl font-bold">
           <?php
           printf(
-            /* translators: %s: search query. */
-            esc_html__('Résultats de recherche pour: %s', 'speed-epaviste'),
+            esc_html__('Résultats de recherche pour : %s', 'speed-epaviste'),
             '<span>' . get_search_query() . '</span>'
           );
           ?>
         </h1>
       </header>
-
-      <?php
-      /* Start the Loop */
-      while (have_posts()) :
+      <?php while (have_posts()) :
         the_post();
         get_template_part('template-parts/content', 'search');
       endwhile;
-
       the_posts_navigation();
-
     else :
       get_template_part('template-parts/content', 'none');
-    endif;
-    ?>
+    endif; ?>
   </div>
 </main>
-
-<?php
-get_footer();
+<?php get_footer(); ?>
