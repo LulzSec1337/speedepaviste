@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -13,6 +12,12 @@
     <?php wp_head(); ?>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #FACC15;
+            --secondary-color: #000000;
+        }
+    </style>
 </head>
 
 <body <?php body_class('min-h-screen flex flex-col bg-gray-50'); ?>>
@@ -68,10 +73,12 @@
                     ?>
                 </nav>
 
-                <!-- CTA Button -->
-                <div class="hidden md:flex items-center">
+                <!-- Theme Switcher and CTA -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <div id="theme-switcher"></div>
                     <a href="tel:0624930536" 
-                       class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full text-black bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-all duration-200">
+                       class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full text-black hover:bg-opacity-90 transition-all duration-200"
+                       style="background-color: var(--primary-color)">
                         <i class="fas fa-phone-alt mr-2"></i>
                         <span>06 24 93 05 36</span>
                     </a>
