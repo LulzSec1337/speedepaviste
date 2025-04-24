@@ -112,6 +112,14 @@ body {
         flex-direction: column;
         gap: 0.5rem;
     }
+    
+    .section-padding {
+        padding: 3rem 1rem;
+    }
+    
+    .hero-section {
+        text-align: center;
+    }
 }
 
 /* Smooth transitions */
@@ -135,4 +143,45 @@ a, button {
 
 .border-theme-primary {
     border-color: var(--primary-color);
+}
+
+/* Additional styles for new components */
+.faq-section {
+  background: linear-gradient(to bottom, #fff 0%, #fef9c3 100%);
+}
+
+.contact-form {
+  background: linear-gradient(to bottom, #fef9c3 0%, #facc15 100%);
+}
+
+/* Smooth transitions */
+.accordion-trigger {
+  transition: color 0.2s ease-in-out;
+}
+
+.form-input,
+.form-textarea {
+  transition: border-color 0.2s ease-in-out;
+}
+
+/* Accessibility improvements */
+:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
