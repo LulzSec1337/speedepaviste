@@ -11,16 +11,89 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: speed-epaviste
 */
 
-/* Utilisez Tailwind CSS pour la plupart du style */
+/* Base styles */
 body {
-  font-family: "Playfair Display", serif;
+    font-family: "Playfair Display", serif;
+    margin: 0;
+    padding: 0;
 }
+
+/* Accessibility */
 .skip-link {
-  left: 0;
-  top: 0;
-  z-index: 100;
-  position: absolute;
-  background: #fff;
-  padding: 8px 14px;
-  color: #222;
+    left: -999px;
+    position: absolute;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: -999;
 }
+
+.skip-link:focus,
+.skip-link:active {
+    color: #222;
+    background-color: #fff;
+    left: auto;
+    top: auto;
+    width: auto;
+    height: auto;
+    overflow: auto;
+    padding: 8px 14px;
+    text-decoration: none;
+    z-index: 100000;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* Mobile menu animations */
+#mobile-menu {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Custom logo adjustments */
+.custom-logo-link img {
+    max-height: 48px;
+    width: auto;
+}
+
+/* Navigation menu styling */
+.menu-item {
+    position: relative;
+}
+
+.menu-item:hover > .sub-menu {
+    display: block;
+}
+
+.sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-width: 200px;
+    z-index: 1000;
+    border-radius: 0.375rem;
+}
+
+@media (max-width: 768px) {
+    .sub-menu {
+        position: static;
+        box-shadow: none;
+        padding-left: 1rem;
+    }
+    
+    .mobile-menu-items {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+/* Smooth transitions */
+a, button {
+    transition: all 0.2s ease-in-out;
+}
+
