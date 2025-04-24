@@ -45,6 +45,29 @@ body {
     left: 0;
 }
 
+/* Dark mode styles */
+:root {
+    --primary-color: #FACC15;
+    --secondary-color: #000000;
+}
+
+.dark {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+.dark .bg-white {
+    background-color: #1a1a1a;
+}
+
+.dark .text-gray-700 {
+    color: #fff;
+}
+
+.dark .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
+}
+
 /* Mobile menu animations */
 #mobile-menu {
     transition: all 0.3s ease-in-out;

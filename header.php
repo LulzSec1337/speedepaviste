@@ -20,14 +20,14 @@
     </style>
 </head>
 
-<body <?php body_class('min-h-screen flex flex-col bg-gray-50'); ?>>
+<body <?php body_class('min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900'); ?>>
     <?php wp_body_open(); ?>
     
     <a class="skip-link sr-only focus:not-sr-only" href="#primary">
         <?php esc_html_e('Aller au contenu principal', 'speed-epaviste'); ?>
     </a>
 
-    <header class="bg-white shadow-md fixed w-full top-0 z-50">
+    <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
