@@ -40,15 +40,19 @@
                 </div>
 
                 <!-- Mobile menu button -->
-                <div class="flex md:hidden">
-                    <button type="button" 
-                            class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-yellow-500"
-                            aria-controls="mobile-menu"
-                            aria-expanded="false">
-                        <span class="sr-only">Ouvrir le menu principal</span>
-                        <i class="fas fa-bars h-6 w-6"></i>
-                    </button>
-                </div>
+                <button type="button" 
+                        id="mobile-menu-toggle"
+                        class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-yellow-500"
+                        aria-controls="mobile-menu"
+                        aria-expanded="false">
+                    <span class="sr-only">Toggle menu</span>
+                    <svg id="menu-icon" class="h-6 w-6 block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg id="close-icon" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
 
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-8" aria-label="Navigation principale">
@@ -76,8 +80,8 @@
         </div>
 
         <!-- Mobile Navigation -->
-        <div class="md:hidden hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1">
+        <div class="md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 hidden" id="mobile-menu-items">
                 <?php
                 wp_nav_menu(array(
                     'theme_location' => 'primary',
@@ -100,21 +104,31 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.querySelector('.mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
+            const toggleButton = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu-items');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
             
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', function() {
-                    const expanded = this.getAttribute('aria-expanded') === 'true';
-                    this.setAttribute('aria-expanded', !expanded);
-                    mobileMenu.classList.toggle('hidden');
+            if (toggleButton && mobileMenu && menuIcon && closeIcon) {
+                toggleButton.addEventListener('click', function() {
+                    const expanded = toggleButton.getAttribute('aria-expanded') === 'true';
+                    toggleButton.setAttribute('aria-expanded', !expanded);
                     
-                    // Toggle icon between bars and times
-                    const icon = this.querySelector('i');
-                    if (icon) {
-                        icon.classList.toggle('fa-bars');
-                        icon.classList.toggle('fa-times');
+                    // Toggle menu visibility with animation
+                    if (expanded) {
+                        mobileMenu.classList.add('animate-fade-out');
+                        setTimeout(() => {
+                            mobileMenu.classList.add('hidden');
+                            mobileMenu.classList.remove('animate-fade-out');
+                        }, 200);
+                    } else {
+                        mobileMenu.classList.remove('hidden');
+                        mobileMenu.classList.add('animate-fade-in');
                     }
+                    
+                    // Toggle icons
+                    menuIcon.classList.toggle('hidden');
+                    closeIcon.classList.toggle('hidden');
                 });
             }
         });
