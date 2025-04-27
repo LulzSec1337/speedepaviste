@@ -3,9 +3,9 @@ import {
   CalendarCheck, 
   Phone, 
   Bolt,
-  Certificate,
+  Badge,
   Leaf,
-  CarCrash,
+  Car,
   MapPin,
   ThumbsUp
 } from "lucide-react";
@@ -30,7 +30,7 @@ const features = [
     animation: "animate-bounce"
   },
   {
-    icon: Certificate,
+    icon: Badge,
     title: "Agréé VHU",
     description: "Certificat de destruction",
     animation: "animate-spin"
@@ -42,7 +42,7 @@ const features = [
     animation: "animate-spin"
   },
   {
-    icon: CarCrash,
+    icon: Car,
     title: "Tous véhicules",
     description: "Auto, utilitaire, 2 roues…",
     animation: "animate-pulse"
