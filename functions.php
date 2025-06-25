@@ -130,7 +130,7 @@ function speed_epaviste_add_defer_attribute($tag, $handle) {
 // Enhanced admin assets with new script
 function speed_epaviste_admin_enqueue_assets($hook) {
     if (strpos($hook, 'speed-epaviste') !== false || $hook === 'toplevel_page_speed-epaviste-dashboard') {
-        wp_enqueue_style('speed-epaviste-admin', get_template_directory_uri() . '/admin-style.css', array(), '3.1.0');
+        wp_enqueue_style('speed-epaviste-admin', get_template_directory_uri() . '/admin-style-velonic.css', array(), '3.1.0');
         wp_enqueue_script('speed-epaviste-admin', get_template_directory_uri() . '/admin-script-enhanced.js', array('jquery', 'wp-color-picker'), '3.1.0', true);
         wp_enqueue_style('wp-color-picker');
         
@@ -175,7 +175,7 @@ function speed_epaviste_optimize_google_fonts() {
     echo '<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>';
 }
 
-// Enhanced admin menu with all panels
+// Enhanced admin menu with all panels including AI Post Generator
 function speed_epaviste_admin_menu() {
     add_menu_page(
         'Speed Épaviste Pro',
@@ -194,6 +194,15 @@ function speed_epaviste_admin_menu() {
         'manage_options',
         'speed-epaviste-seo',
         'speed_epaviste_seo_page'
+    );
+    
+    add_submenu_page(
+        'speed-epaviste-dashboard',
+        'AI Post Generator',
+        'AI Post Generator',
+        'manage_options',
+        'speed-epaviste-ai-posts',
+        'speed_epaviste_ai_posts_page'
     );
     
     add_submenu_page(
@@ -271,6 +280,11 @@ function speed_epaviste_seo_page() {
     include get_template_directory() . '/inc/admin-seo.php';
 }
 
+// AI Post Generator page
+function speed_epaviste_ai_posts_page() {
+    include get_template_directory() . '/inc/admin-ai-posts.php';
+}
+
 // Analytics page
 function speed_epaviste_analytics_page() {
     include get_template_directory() . '/inc/admin-analytics.php';
@@ -306,7 +320,7 @@ function speed_epaviste_forms_page() {
     include get_template_directory() . '/inc/admin-forms.php';
 }
 
-// Comprehensive AJAX handlers for all functionality
+// Comprehensive AJAX handlers for all functionality including AI Post Generator
 add_action('wp_ajax_save_seo_settings', 'speed_epaviste_save_seo_settings');
 add_action('wp_ajax_save_theme_settings', 'speed_epaviste_save_theme_settings');
 add_action('wp_ajax_analyze_seo_complete', 'speed_epaviste_analyze_seo_complete');
@@ -321,6 +335,12 @@ add_action('wp_ajax_save_cache_settings', 'speed_epaviste_save_cache_settings');
 add_action('wp_ajax_get_cache_stats', 'speed_epaviste_get_cache_stats');
 add_action('wp_ajax_save_custom_form', 'speed_epaviste_save_custom_form');
 add_action('wp_ajax_save_custom_page', 'speed_epaviste_save_custom_page');
+
+// AI Post Generator AJAX handlers
+add_action('wp_ajax_generate_ai_post', 'speed_epaviste_generate_ai_post');
+add_action('wp_ajax_analyze_post_seo', 'speed_epaviste_analyze_post_seo');
+add_action('wp_ajax_save_ai_post', 'speed_epaviste_save_ai_post');
+add_action('wp_ajax_save_ai_api_key', 'speed_epaviste_save_ai_api_key');
 
 // SEO Functions
 function speed_epaviste_save_seo_settings() {
@@ -418,6 +438,342 @@ function speed_epaviste_submit_to_google_real() {
     } else {
         wp_send_json_error('Failed to submit sitemap to Google');
     }
+}
+
+// AI Post Generator Functions
+function speed_epaviste_generate_ai_post() {
+    check_ajax_referer('speed_epaviste_admin_nonce', 'nonce');
+    
+    $keyword = sanitize_text_field($_POST['keyword']);
+    $keyphrase = sanitize_text_field($_POST['keyphrase']);
+    $ai_provider = sanitize_text_field($_POST['ai_provider']);
+    $content_type = sanitize_text_field($_POST['content_type']);
+    $word_count = intval($_POST['word_count']);
+    
+    // Get API key based on provider
+    $api_key = get_option('ai_api_key_' . $ai_provider, '');
+    
+    if (empty($api_key)) {
+        wp_send_json_error('API key not configured for ' . $ai_provider);
+    }
+    
+    $generated_content = speed_epaviste_call_ai_api($ai_provider, $api_key, $keyword, $keyphrase, $content_type, $word_count);
+    
+    if ($generated_content) {
+        // Generate SEO optimized content
+        $seo_title = speed_epaviste_generate_seo_title($keyword, $keyphrase);
+        $seo_description = speed_epaviste_generate_seo_description($keyword, $keyphrase);
+        $seo_keywords = speed_epaviste_generate_seo_keywords($keyword, $keyphrase);
+        
+        $response = array(
+            'title' => $seo_title,
+            'content' => $generated_content,
+            'seo_description' => $seo_description,
+            'seo_keywords' => $seo_keywords,
+            'excerpt' => wp_trim_words(strip_tags($generated_content), 30)
+        );
+        
+        wp_send_json_success($response);
+    } else {
+        wp_send_json_error('Failed to generate content');
+    }
+}
+
+function speed_epaviste_call_ai_api($provider, $api_key, $keyword, $keyphrase, $content_type, $word_count) {
+    $prompt = speed_epaviste_build_content_prompt($keyword, $keyphrase, $content_type, $word_count);
+    
+    switch ($provider) {
+        case 'openai':
+            return speed_epaviste_call_openai_api($api_key, $prompt);
+        case 'deepseek':
+            return speed_epaviste_call_deepseek_api($api_key, $prompt);
+        case 'copilot':
+            return speed_epaviste_call_copilot_api($api_key, $prompt);
+        default:
+            return false;
+    }
+}
+
+function speed_epaviste_build_content_prompt($keyword, $keyphrase, $content_type, $word_count) {
+    $prompt = "Create a comprehensive {$content_type} article about '{$keyword}' with focus on the keyphrase '{$keyphrase}'. ";
+    $prompt .= "The article should be approximately {$word_count} words and include:\n\n";
+    $prompt .= "1. Engaging introduction with the main keyword\n";
+    $prompt .= "2. Well-structured headings (H2, H3) that include variations of the keyword\n";
+    $prompt .= "3. Informative content with proper HTML formatting\n";
+    $prompt .= "4. Include relevant subheadings, bullet points, and numbered lists\n";
+    $prompt .= "5. Natural keyword distribution (1-2% density)\n";
+    $prompt .= "6. Call-to-action sections where appropriate\n";
+    $prompt .= "7. Use semantic HTML tags like <article>, <section>, <header>\n";
+    $prompt .= "8. Include schema-friendly structure\n\n";
+    $prompt .= "Format the output as clean HTML with proper semantic structure. ";
+    $prompt .= "Make it SEO-optimized and reader-friendly with good readability score.";
+    
+    return $prompt;
+}
+
+function speed_epaviste_call_openai_api($api_key, $prompt) {
+    $response = wp_remote_post('https://api.openai.com/v1/chat/completions', array(
+        'timeout' => 60,
+        'headers' => array(
+            'Authorization' => 'Bearer ' . $api_key,
+            'Content-Type' => 'application/json',
+        ),
+        'body' => json_encode(array(
+            'model' => 'gpt-4',
+            'messages' => array(
+                array(
+                    'role' => 'system',
+                    'content' => 'You are an expert SEO content writer specializing in creating high-quality, search-engine-optimized articles.'
+                ),
+                array(
+                    'role' => 'user',
+                    'content' => $prompt
+                )
+            ),
+            'temperature' => 0.7,
+            'max_tokens' => 4000
+        ))
+    ));
+    
+    if (!is_wp_error($response)) {
+        $body = wp_remote_retrieve_body($response);
+        $data = json_decode($body, true);
+        
+        if (isset($data['choices'][0]['message']['content'])) {
+            return $data['choices'][0]['message']['content'];
+        }
+    }
+    
+    return false;
+}
+
+function speed_epaviste_call_deepseek_api($api_key, $prompt) {
+    $response = wp_remote_post('https://api.deepseek.com/v1/chat/completions', array(
+        'timeout' => 60,
+        'headers' => array(
+            'Authorization' => 'Bearer ' . $api_key,
+            'Content-Type' => 'application/json',
+        ),
+        'body' => json_encode(array(
+            'model' => 'deepseek-chat',
+            'messages' => array(
+                array(
+                    'role' => 'system',
+                    'content' => 'You are an expert SEO content writer specializing in creating high-quality, search-engine-optimized articles.'
+                ),
+                array(
+                    'role' => 'user',
+                    'content' => $prompt
+                )
+            ),
+            'temperature' => 0.7,
+            'max_tokens' => 4000
+        ))
+    ));
+    
+    if (!is_wp_error($response)) {
+        $body = wp_remote_retrieve_body($response);
+        $data = json_decode($body, true);
+        
+        if (isset($data['choices'][0]['message']['content'])) {
+            return $data['choices'][0]['message']['content'];
+        }
+    }
+    
+    return false;
+}
+
+function speed_epaviste_call_copilot_api($api_key, $prompt) {
+    // Microsoft Copilot API implementation
+    $response = wp_remote_post('https://api.github.com/copilot/chat/completions', array(
+        'timeout' => 60,
+        'headers' => array(
+            'Authorization' => 'Bearer ' . $api_key,
+            'Content-Type' => 'application/json',
+        ),
+        'body' => json_encode(array(
+            'messages' => array(
+                array(
+                    'role' => 'system',
+                    'content' => 'You are an expert SEO content writer specializing in creating high-quality, search-engine-optimized articles.'
+                ),
+                array(
+                    'role' => 'user',
+                    'content' => $prompt
+                )
+            ),
+            'temperature' => 0.7,
+            'max_tokens' => 4000
+        ))
+    ));
+    
+    if (!is_wp_error($response)) {
+        $body = wp_remote_retrieve_body($response);
+        $data = json_decode($body, true);
+        
+        if (isset($data['choices'][0]['message']['content'])) {
+            return $data['choices'][0]['message']['content'];
+        }
+    }
+    
+    return false;
+}
+
+function speed_epaviste_generate_seo_title($keyword, $keyphrase) {
+    $templates = array(
+        "{$keyword}: Guide Complet {$keyphrase}",
+        "Tout Savoir sur {$keyword} - {$keyphrase}",
+        "{$keyphrase}: Le Guide Ultime {$keyword}",
+        "Maîtriser {$keyword} avec {$keyphrase}",
+        "{$keyword} Professionnel: {$keyphrase} Expliqué"
+    );
+    
+    return $templates[array_rand($templates)];
+}
+
+function speed_epaviste_generate_seo_description($keyword, $keyphrase) {
+    return "Découvrez tout ce qu'il faut savoir sur {$keyword}. Guide complet avec {$keyphrase}, conseils d'experts et solutions pratiques. ✓ Informations vérifiées ✓ Guide étape par étape.";
+}
+
+function speed_epaviste_generate_seo_keywords($keyword, $keyphrase) {
+    return "{$keyword}, {$keyphrase}, guide {$keyword}, comment {$keyphrase}, {$keyword} professionnel, conseils {$keyword}";
+}
+
+function speed_epaviste_analyze_post_seo() {
+    check_ajax_referer('speed_epaviste_admin_nonce', 'nonce');
+    
+    $title = sanitize_text_field($_POST['title']);
+    $content = wp_kses_post($_POST['content']);
+    $description = sanitize_textarea_field($_POST['description']);
+    $keyword = sanitize_text_field($_POST['keyword']);
+    
+    $analysis = speed_epaviste_perform_seo_analysis($title, $content, $description, $keyword);
+    
+    wp_send_json_success($analysis);
+}
+
+function speed_epaviste_perform_seo_analysis($title, $content, $description, $keyword) {
+    $score = 100;
+    $issues = array();
+    $recommendations = array();
+    
+    // Title analysis
+    $title_length = strlen($title);
+    if ($title_length < 30 || $title_length > 60) {
+        $score -= 10;
+        $issues[] = "Titre SEO: longueur non optimale ({$title_length} caractères)";
+        $recommendations[] = "Ajuster la longueur du titre entre 30-60 caractères";
+    }
+    
+    if (stripos($title, $keyword) === false) {
+        $score -= 15;
+        $issues[] = "Mot-clé principal absent du titre";
+        $recommendations[] = "Inclure le mot-clé principal dans le titre";
+    }
+    
+    // Description analysis
+    $desc_length = strlen($description);
+    if ($desc_length < 120 || $desc_length > 160) {
+        $score -= 10;
+        $issues[] = "Meta description: longueur non optimale ({$desc_length} caractères)";
+        $recommendations[] = "Ajuster la meta description entre 120-160 caractères";
+    }
+    
+    if (stripos($description, $keyword) === false) {
+        $score -= 10;
+        $issues[] = "Mot-clé absent de la meta description";
+        $recommendations[] = "Inclure le mot-clé dans la meta description";
+    }
+    
+    // Content analysis
+    $word_count = str_word_count(strip_tags($content));
+    if ($word_count < 300) {
+        $score -= 20;
+        $issues[] = "Contenu trop court ({$word_count} mots)";
+        $recommendations[] = "Augmenter le contenu à au moins 300 mots";
+    }
+    
+    // Keyword density
+    $content_text = strip_tags($content);
+    $keyword_count = substr_count(strtolower($content_text), strtolower($keyword));
+    $keyword_density = ($keyword_count / $word_count) * 100;
+    
+    if ($keyword_density < 0.5 || $keyword_density > 3) {
+        $score -= 10;
+        $issues[] = "Densité du mot-clé non optimale ({$keyword_density}%)";
+        $recommendations[] = "Maintenir la densité du mot-clé entre 0.5% et 3%";
+    }
+    
+    // Headings analysis
+    $h1_count = substr_count($content, '<h1');
+    $h2_count = substr_count($content, '<h2');
+    
+    if ($h1_count === 0) {
+        $score -= 15;
+        $issues[] = "Aucun titre H1 trouvé";
+        $recommendations[] = "Ajouter un titre H1 principal";
+    }
+    
+    if ($h2_count === 0) {
+        $score -= 10;
+        $issues[] = "Aucun sous-titre H2 trouvé";
+        $recommendations[] = "Structurer le contenu avec des sous-titres H2";
+    }
+    
+    return array(
+        'score' => max(0, $score),
+        'issues' => $issues,
+        'recommendations' => $recommendations,
+        'word_count' => $word_count,
+        'keyword_density' => round($keyword_density, 2)
+    );
+}
+
+function speed_epaviste_save_ai_post() {
+    check_ajax_referer('speed_epaviste_admin_nonce', 'nonce');
+    
+    $title = sanitize_text_field($_POST['title']);
+    $content = wp_kses_post($_POST['content']);
+    $excerpt = sanitize_textarea_field($_POST['excerpt']);
+    $seo_description = sanitize_textarea_field($_POST['seo_description']);
+    $seo_keywords = sanitize_text_field($_POST['seo_keywords']);
+    $status = sanitize_text_field($_POST['status']);
+    
+    $post_data = array(
+        'post_title' => $title,
+        'post_content' => $content,
+        'post_excerpt' => $excerpt,
+        'post_status' => $status,
+        'post_type' => 'post',
+        'meta_input' => array(
+            '_yoast_wpseo_metadesc' => $seo_description,
+            '_yoast_wpseo_focuskw' => $seo_keywords,
+            '_speed_epaviste_ai_generated' => 1
+        )
+    );
+    
+    $post_id = wp_insert_post($post_data);
+    
+    if ($post_id) {
+        wp_send_json_success(array(
+            'post_id' => $post_id,
+            'edit_url' => admin_url('post.php?post=' . $post_id . '&action=edit'),
+            'view_url' => get_permalink($post_id)
+        ));
+    } else {
+        wp_send_json_error('Failed to save post');
+    }
+}
+
+function speed_epaviste_save_ai_api_key() {
+    check_ajax_referer('speed_epaviste_admin_nonce', 'nonce');
+    
+    $provider = sanitize_text_field($_POST['provider']);
+    $api_key = sanitize_text_field($_POST['api_key']);
+    
+    update_option('ai_api_key_' . $provider, $api_key);
+    
+    wp_send_json_success('API key saved successfully');
 }
 
 // Performance Functions
