@@ -79,9 +79,9 @@ function speed_epaviste_widgets_init() {
 }
 add_action( 'widgets_init', 'speed_epaviste_widgets_init' );
 
-// Enhanced asset loading for PageSpeed with all files
+// Enhanced asset loading for PageSpeed with all files including page builder
 function speed_epaviste_enqueue_assets() {
-    $version = '3.1.0';
+    $version = '3.2.0';
     
     // Critical CSS inline for above-the-fold content
     $critical_css = '
@@ -105,6 +105,12 @@ function speed_epaviste_enqueue_assets() {
     wp_enqueue_script('speed-epaviste-animations', get_template_directory_uri() . '/js/animations.js', array('speed-epaviste-core'), $version, true);
     wp_enqueue_script('speed-epaviste-performance', get_template_directory_uri() . '/js/performance.js', array('speed-epaviste-core'), $version, true);
     wp_enqueue_script('speed-epaviste-main', get_template_directory_uri() . '/main.js', array('speed-epaviste-core'), $version, true);
+    
+    // Page Builder assets
+    if (is_admin() && (isset($_GET['page']) && $_GET['page'] === 'speed-epaviste-builder')) {
+        wp_enqueue_style('speed-epaviste-page-builder', get_template_directory_uri() . '/css/page-builder.css', array(), $version, 'all');
+        wp_enqueue_script('speed-epaviste-page-builder', get_template_directory_uri() . '/js/page-builder.js', array('jquery'), $version, true);
+    }
     
     // Add defer attribute to all theme scripts for better performance
     add_filter('script_loader_tag', 'speed_epaviste_add_defer_attribute', 10, 2);
@@ -175,7 +181,7 @@ function speed_epaviste_optimize_google_fonts() {
     echo '<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>';
 }
 
-// Enhanced admin menu with all panels including AI Post Generator
+// Enhanced admin menu with Page Builder
 function speed_epaviste_admin_menu() {
     add_menu_page(
         'Speed Épaviste Pro',
@@ -252,8 +258,8 @@ function speed_epaviste_admin_menu() {
     
     add_submenu_page(
         'speed-epaviste-dashboard',
-        'Page Builder',
-        'Page Builder',
+        'Page Builder Pro',
+        'Page Builder Pro',
         'manage_options',
         'speed-epaviste-builder',
         'speed_epaviste_builder_page'
@@ -310,9 +316,9 @@ function speed_epaviste_cache_page() {
     include get_template_directory() . '/inc/admin-cache.php';
 }
 
-// Builder page
+// Enhanced Builder page
 function speed_epaviste_builder_page() {
-    include get_template_directory() . '/inc/admin-builder.php';
+    include get_template_directory() . '/inc/admin-page-builder.php';
 }
 
 // Forms page
@@ -320,7 +326,7 @@ function speed_epaviste_forms_page() {
     include get_template_directory() . '/inc/admin-forms.php';
 }
 
-// Comprehensive AJAX handlers for all functionality including AI Post Generator
+// Enhanced AJAX handlers including Page Builder
 add_action('wp_ajax_save_seo_settings', 'speed_epaviste_save_seo_settings');
 add_action('wp_ajax_save_theme_settings', 'speed_epaviste_save_theme_settings');
 add_action('wp_ajax_analyze_seo_complete', 'speed_epaviste_analyze_seo_complete');
@@ -341,6 +347,12 @@ add_action('wp_ajax_generate_ai_post', 'speed_epaviste_generate_ai_post');
 add_action('wp_ajax_analyze_post_seo', 'speed_epaviste_analyze_post_seo');
 add_action('wp_ajax_save_ai_post', 'speed_epaviste_save_ai_post');
 add_action('wp_ajax_save_ai_api_key', 'speed_epaviste_save_ai_api_key');
+
+// Page Builder AJAX handlers
+add_action('wp_ajax_save_page_builder', 'speed_epaviste_save_page_builder');
+add_action('wp_ajax_load_page_builder', 'speed_epaviste_load_page_builder');
+add_action('wp_ajax_save_page_template', 'speed_epaviste_save_page_template');
+add_action('wp_ajax_load_page_templates', 'speed_epaviste_load_page_templates');
 
 // SEO Functions
 function speed_epaviste_save_seo_settings() {
@@ -775,6 +787,187 @@ function speed_epaviste_save_ai_api_key() {
     
     wp_send_json_success('API key saved successfully');
 }
+
+// Page Builder Functions
+function speed_epaviste_save_page_builder() {
+    check_ajax_referer('speed_epaviste_admin_nonce', 'nonce');
+    
+    $page_data = json_decode(stripslashes($_POST['page_data']), true);
+    
+    if (!$page_data) {
+        wp_send_json_error('Invalid page data');
+        return;
+    }
+    
+    $title = sanitize_text_field($page_data['title']);
+    $content = wp_kses_post($page_data['content']);
+    $timestamp = intval($page_data['timestamp']);
+    
+    // Create or update page
+    $page_id = wp_insert_post(array(
+        'post_title' => $title,
+        'post_content' => $content,
+        'post_status' => 'publish',
+        'post_type' => 'page',
+        'meta_input' => array(
+            '_speed_epaviste_page_builder' => 1,
+            '_speed_epaviste_builder_data' => $page_data,
+            '_speed_epaviste_last_modified' => $timestamp
+        )
+    ));
+    
+    if (is_wp_error($page_id)) {
+        wp_send_json_error('Failed to save page: ' . $page_id->get_error_message());
+    } else {
+        // Generate clean HTML for frontend
+        $clean_content = speed_epaviste_clean_builder_content($content);
+        wp_update_post(array(
+            'ID' => $page_id,
+            'post_content' => $clean_content
+        ));
+        
+        wp_send_json_success(array(
+            'page_id' => $page_id,
+            'edit_url' => admin_url('post.php?post=' . $page_id . '&action=edit'),
+            'view_url' => get_permalink($page_id),
+            'message' => 'Page saved successfully'
+        ));
+    }
+}
+
+function speed_epaviste_load_page_builder() {
+    check_ajax_referer('speed_epaviste_admin_nonce', 'nonce');
+    
+    $page_id = intval($_POST['page_id']);
+    
+    if (!$page_id) {
+        wp_send_json_error('Invalid page ID');
+        return;
+    }
+    
+    $page = get_post($page_id);
+    if (!$page) {
+        wp_send_json_error('Page not found');
+        return;
+    }
+    
+    $builder_data = get_post_meta($page_id, '_speed_epaviste_builder_data', true);
+    
+    wp_send_json_success(array(
+        'title' => $page->post_title,
+        'content' => $page->post_content,
+        'builder_data' => $builder_data
+    ));
+}
+
+function speed_epaviste_save_page_template() {
+    check_ajax_referer('speed_epaviste_admin_nonce', 'nonce');
+    
+    $template_name = sanitize_text_field($_POST['template_name']);
+    $template_content = wp_kses_post($_POST['template_content']);
+    
+    if (!$template_name || !$template_content) {
+        wp_send_json_error('Template name and content are required');
+        return;
+    }
+    
+    // Save template to custom table or option
+    $templates = get_option('speed_epaviste_page_templates', array());
+    $templates[$template_name] = array(
+        'name' => $template_name,
+        'content' => $template_content,
+        'created' => current_time('mysql'),
+        'author' => get_current_user_id()
+    );
+    
+    update_option('speed_epaviste_page_templates', $templates);
+    
+    wp_send_json_success(array(
+        'message' => 'Template saved successfully',
+        'template_id' => $template_name
+    ));
+}
+
+function speed_epaviste_load_page_templates() {
+    check_ajax_referer('speed_epaviste_admin_nonce', 'nonce');
+    
+    $templates = get_option('speed_epaviste_page_templates', array());
+    
+    wp_send_json_success($templates);
+}
+
+function speed_epaviste_clean_builder_content($html) {
+    // Remove builder-specific classes and attributes
+    $html = str_replace('builder-element', 'page-element', $html);
+    $html = preg_replace('/data-type="[^"]*"/', '', $html);
+    $html = preg_replace('/data-id="[^"]*"/', '', $html);
+    $html = str_replace('contenteditable="true"', '', $html);
+    
+    // Clean up extra spaces
+    $html = preg_replace('/\s+/', ' ', $html);
+    $html = str_replace('> <', '><', $html);
+    
+    // Wrap in semantic HTML
+    $html = '<article class="page-builder-content">' . $html . '</article>';
+    
+    return $html;
+}
+
+// Add Page Builder styles to frontend
+function speed_epaviste_frontend_page_builder_styles() {
+    if (is_page() && get_post_meta(get_the_ID(), '_speed_epaviste_page_builder', true)) {
+        echo '<style>
+        .page-builder-content { max-width: 100%; }
+        .page-element { position: relative; }
+        .builder-container { width: 100%; }
+        .builder-columns { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .builder-columns > div { flex: 1; min-width: 250px; }
+        .builder-button { 
+            display: inline-block; 
+            text-decoration: none; 
+            transition: all 0.2s ease;
+        }
+        .builder-button:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .builder-form { max-width: 600px; }
+        .builder-form .form-group { margin-bottom: 1rem; }
+        .builder-form label { 
+            display: block; 
+            margin-bottom: 0.5rem; 
+            font-weight: 500; 
+        }
+        .builder-form input, 
+        .builder-form textarea, 
+        .builder-form select { 
+            width: 100%; 
+            padding: 0.75rem; 
+            border: 1px solid #dee2e6; 
+            border-radius: 4px; 
+            font-size: 1rem;
+        }
+        .builder-form button { 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            padding: 0.75rem 1.5rem; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 1rem;
+        }
+        .builder-spacer { height: var(--spacer-height, 50px); }
+        .builder-list { margin: 0; padding-left: 1.5rem; }
+        .builder-list li { margin-bottom: 0.5rem; }
+        
+        @media (max-width: 768px) {
+            .builder-columns { flex-direction: column; }
+            .builder-columns > div { min-width: 100%; }
+        }
+        </style>';
+    }
+}
+add_action('wp_head', 'speed_epaviste_frontend_page_builder_styles');
 
 // Performance Functions
 function speed_epaviste_analyze_real_pagespeed() {
