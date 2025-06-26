@@ -150,279 +150,6 @@ function speed_epaviste_add_defer_attribute($tag, $handle) {
     return $tag;
 }
 
-// Enhanced admin assets with proper error handling
-function speed_epaviste_admin_enqueue_assets($hook) {
-    if (strpos($hook, 'speed-epaviste') !== false || $hook === 'toplevel_page_speed-epaviste-dashboard') {
-        
-        // Professional Velonic admin style
-        wp_enqueue_style('speed-epaviste-admin-velonic', get_template_directory_uri() . '/admin-style-velonic.css', array(), '3.3.0');
-        
-        // Font Awesome for icons
-        wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0');
-        
-        // Google Fonts for better typography
-        wp_enqueue_style('google-fonts-inter', 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap', array(), null);
-        
-        // Admin JavaScript with enhanced functionality
-        wp_enqueue_script('speed-epaviste-admin-enhanced', get_template_directory_uri() . '/admin-script-enhanced.js', array('jquery', 'wp-color-picker'), '3.3.0', true);
-        wp_enqueue_style('wp-color-picker');
-        
-        // Page Builder specific assets
-        if (isset($_GET['page']) && $_GET['page'] === 'speed-epaviste-builder') {
-            $page_builder_css = get_template_directory() . '/css/page-builder.css';
-            $page_builder_js = get_template_directory() . '/js/page-builder.js';
-            
-            if (file_exists($page_builder_css)) {
-                wp_enqueue_style('speed-epaviste-page-builder', get_template_directory_uri() . '/css/page-builder.css', array(), '3.3.0');
-            }
-            
-            if (file_exists($page_builder_js)) {
-                wp_enqueue_script('speed-epaviste-page-builder', get_template_directory_uri() . '/js/page-builder.js', array('jquery', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-droppable'), '3.3.0', true);
-            }
-        }
-        
-        // Chart.js for analytics
-        wp_enqueue_script('chartjs', 'https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js', array(), '3.9.1', true);
-        
-        wp_localize_script('speed-epaviste-admin-enhanced', 'speedEpavisteAdmin', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('speed_epaviste_admin_nonce'),
-            'theme_url' => get_template_directory_uri()
-        ));
-    }
-}
-add_action('admin_enqueue_scripts', 'speed_epaviste_admin_enqueue_assets');
-
-// PageSpeed optimizations
-function speed_epaviste_pagespeed_optimizations() {
-    // Remove query strings from static resources
-    add_filter('script_loader_src', 'speed_epaviste_remove_script_version', 15, 1);
-    add_filter('style_loader_src', 'speed_epaviste_remove_script_version', 15, 1);
-    
-    // Add preload for critical resources
-    add_action('wp_head', 'speed_epaviste_add_preload_links', 1);
-    
-    // Optimize Google Fonts loading
-    add_action('wp_head', 'speed_epaviste_optimize_google_fonts', 2);
-}
-add_action('init', 'speed_epaviste_pagespeed_optimizations');
-
-function speed_epaviste_remove_script_version($src) {
-    $parts = explode('?ver', $src);
-    return $parts[0];
-}
-
-function speed_epaviste_add_preload_links() {
-    echo '<link rel="preload" href="' . get_template_directory_uri() . '/admin-style-velonic.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
-    echo '<link rel="dns-prefetch" href="//fonts.googleapis.com">';
-    echo '<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">';
-    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
-}
-
-function speed_epaviste_optimize_google_fonts() {
-    echo '<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
-    echo '<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>';
-}
-
-// Enhanced admin menu with all features
-function speed_epaviste_admin_menu() {
-    add_menu_page(
-        'Speed Épaviste Pro',
-        'Speed Épaviste',
-        'manage_options',
-        'speed-epaviste-dashboard',
-        'speed_epaviste_dashboard_page',
-        'dashicons-admin-customizer',
-        2
-    );
-    
-    $submenus = array(
-        'speed-epaviste-seo' => array('SEO Manager', 'SEO Manager'),
-        'speed-epaviste-ai-posts' => array('AI Post Generator', 'AI Posts'),
-        'speed-epaviste-analytics' => array('Analytics', 'Analytics'),
-        'speed-epaviste-customizer' => array('Theme Customizer', 'Customizer'),
-        'speed-epaviste-performance' => array('Performance', 'Performance'),
-        'speed-epaviste-security' => array('Security', 'Security'),
-        'speed-epaviste-cache' => array('Cache Manager', 'Cache'),
-        'speed-epaviste-builder' => array('Page Builder Pro', 'Page Builder'),
-        'speed-epaviste-forms' => array('Forms Manager', 'Forms'),
-        'speed-epaviste-file-manager' => array('File Manager', 'Files'),
-        'speed-epaviste-email' => array('Email Marketing', 'Email'),
-        'speed-epaviste-ai-chat' => array('AI Chatbot', 'AI Chat')
-    );
-    
-    foreach ($submenus as $slug => $titles) {
-        add_submenu_page(
-            'speed-epaviste-dashboard',
-            $titles[0],
-            $titles[1],
-            'manage_options',
-            $slug,
-            'speed_epaviste_' . str_replace('-', '_', str_replace('speed-epaviste-', '', $slug)) . '_page'
-        );
-    }
-}
-add_action('admin_menu', 'speed_epaviste_admin_menu');
-
-// Include all admin page functions with error handling
-function speed_epaviste_dashboard_page() {
-    $file = get_template_directory() . '/inc/admin-dashboard.php';
-    if (file_exists($file)) {
-        include $file;
-    } else {
-        echo '<div class="notice notice-error"><p>Dashboard file not found. Please check your theme installation.</p></div>';
-    }
-}
-
-function speed_epaviste_seo_page() {
-    $file = get_template_directory() . '/inc/admin-seo.php';
-    if (file_exists($file)) {
-        include $file;
-    } else {
-        echo '<div class="notice notice-error"><p>SEO page file not found.</p></div>';
-    }
-}
-
-function speed_epaviste_ai_posts_page() {
-    $file = get_template_directory() . '/inc/admin-ai-posts.php';
-    if (file_exists($file)) {
-        include $file;
-    } else {
-        echo '<div class="notice notice-error"><p>AI Posts page file not found.</p></div>';
-    }
-}
-
-function speed_epaviste_analytics_page() {
-    $file = get_template_directory() . '/inc/admin-analytics.php';
-    if (file_exists($file)) {
-        include $file;
-    } else {
-        echo '<div class="notice notice-error"><p>Analytics page file not found.</p></div>';
-    }
-}
-
-function speed_epaviste_customizer_page() {
-    $file = get_template_directory() . '/inc/admin-customizer.php';
-    if (file_exists($file)) {
-        include $file;
-    } else {
-        echo '<div class="notice notice-error"><p>Customizer page file not found.</p></div>';
-    }
-}
-
-function speed_epaviste_performance_page() {
-    $file = get_template_directory() . '/inc/admin-performance.php';
-    if (file_exists($file)) {
-        include $file;
-    } else {
-        echo '<div class="notice notice-error"><p>Performance page file not found.</p></div>';
-    }
-}
-
-function speed_epaviste_security_page() {
-    $file = get_template_directory() . '/inc/admin-security.php';
-    if (file_exists($file)) {
-        include $file;
-    } else {
-        echo '<div class="notice notice-error"><p>Security page file not found.</p></div>';
-    }
-}
-
-function speed_epaviste_cache_page() {
-    $file = get_template_directory() . '/inc/admin-cache.php';
-    if (file_exists($file)) {
-        include $file;
-    } else {
-        echo '<div class="notice notice-error"><p>Cache page file not found.</p></div>';
-    }
-}
-
-function speed_epaviste_builder_page() {
-    $file = get_template_directory() . '/inc/admin-page-builder.php';
-    if (file_exists($file)) {
-        include $file;
-    } else {
-        echo '<div class="notice notice-error"><p>Page Builder file not found.</p></div>';
-    }
-}
-
-function speed_epaviste_forms_page() {
-    $file = get_template_directory() . '/inc/admin-forms.php';
-    if (file_exists($file)) {
-        include $file;
-    } else {
-        echo '<div class="notice notice-error"><p>Forms page file not found.</p></div>';
-    }
-}
-
-function speed_epaviste_file_manager_page() {
-    echo '<div class="speed-epaviste-admin">
-        <div class="dashboard-header">
-            <h1><i class="fas fa-folder-open"></i> File Manager Pro</h1>
-            <p>Manage all your website files and folders with advanced editing capabilities</p>
-        </div>
-        <div class="notice notice-info">
-            <p><i class="fas fa-info-circle"></i> File Manager functionality coming soon. This feature will allow you to browse, edit, and manage all your website files directly from the admin panel.</p>
-        </div>
-    </div>';
-}
-
-function speed_epaviste_email_page() {
-    echo '<div class="speed-epaviste-admin">
-        <div class="dashboard-header">
-            <h1><i class="fas fa-envelope"></i> Email Marketing Suite</h1>
-            <p>Create and send professional email campaigns with AI assistance</p>
-        </div>
-        <div class="notice notice-info">
-            <p><i class="fas fa-info-circle"></i> Email Marketing functionality coming soon. This will include subscriber management, campaign builder, and analytics.</p>
-        </div>
-    </div>';
-}
-
-function speed_epaviste_ai_chat_page() {
-    echo '<div class="speed-epaviste-admin">
-        <div class="dashboard-header">
-            <h1><i class="fas fa-robot"></i> AI Chatbot Manager</h1>
-            <p>Configure and manage your AI-powered chatbot for customer support</p>
-        </div>
-        <div class="notice notice-info">
-            <p><i class="fas fa-info-circle"></i> AI Chatbot functionality coming soon. This will allow you to create intelligent chatbots for your website.</p>
-        </div>
-    </div>';
-}
-
-// AJAX handlers for all features with proper error handling
-$ajax_handlers = array(
-    'save_seo_settings',
-    'save_theme_settings', 
-    'analyze_seo_complete',
-    'submit_to_google_real',
-    'generate_real_sitemap',
-    'analyze_real_pagespeed',
-    'get_real_time_stats',
-    'get_visitor_list',
-    'run_security_scan',
-    'clear_cache',
-    'save_cache_settings',
-    'get_cache_stats',
-    'save_custom_form',
-    'generate_ai_post',
-    'analyze_post_seo',
-    'save_ai_post',
-    'save_ai_api_key',
-    'save_page_builder',
-    'load_page_builder',
-    'save_page_template',
-    'load_page_templates',
-    'create_new_page',
-    'load_template',
-    'save_as_template'
-);
-
-foreach ($ajax_handlers as $handler) {
-    add_action('wp_ajax_' . $handler, 'speed_epaviste_' . $handler);
-}
-
 // Page Builder Functions with enhanced error handling
 function speed_epaviste_save_page_builder() {
     // Verify nonce for security
@@ -734,6 +461,32 @@ function speed_epaviste_frontend_page_builder_styles() {
 }
 add_action('wp_head', 'speed_epaviste_frontend_page_builder_styles');
 
+// Register Page Builder AJAX handlers
+add_action('wp_ajax_save_page_builder', 'speed_epaviste_save_page_builder');
+add_action('wp_ajax_load_page_builder', 'speed_epaviste_load_page_builder');
+add_action('wp_ajax_save_page_template', 'speed_epaviste_save_page_template');
+add_action('wp_ajax_load_page_templates', 'speed_epaviste_load_page_templates');
+add_action('wp_ajax_create_new_page', 'speed_epaviste_create_new_page');
+add_action('wp_ajax_load_template', 'speed_epaviste_load_template');
+add_action('wp_ajax_save_as_template', 'speed_epaviste_save_as_template');
+
+// Include refactored function files
+$function_files = array(
+    'inc/admin-functions.php',
+    'inc/performance-functions.php',
+    'inc/ai-functions.php',
+    'inc/email-functions.php',
+    'inc/file-functions.php',
+    'inc/chat-functions.php'
+);
+
+foreach ($function_files as $file) {
+    $full_path = get_template_directory() . '/' . $file;
+    if (file_exists($full_path)) {
+        require $full_path;
+    }
+}
+
 // Template includes with error handling
 $template_files = array(
     'inc/custom-header.php',
@@ -755,42 +508,3 @@ if ( defined( 'JETPACK__VERSION' ) ) {
         require $jetpack_file;
     }
 }
-
-// Service Worker registration for enhanced performance
-function speed_epaviste_register_service_worker() {
-    $sw_file = get_template_directory() . '/sw.js';
-    if (file_exists($sw_file)) {
-        echo '<script>
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", function() {
-                navigator.serviceWorker.register("' . get_template_directory_uri() . '/sw.js")
-                    .then(function(registration) {
-                        console.log("SW registered: ", registration);
-                    })
-                    .catch(function(registrationError) {
-                        console.log("SW registration failed: ", registrationError);
-                    });
-            });
-        }
-        </script>';
-    }
-}
-add_action('wp_footer', 'speed_epaviste_register_service_worker');
-
-// Add admin body class for proper styling
-function speed_epaviste_admin_body_class($classes) {
-    return $classes . ' speed-epaviste-admin-body';
-}
-add_filter('admin_body_class', 'speed_epaviste_admin_body_class');
-
-// Enhance admin notices
-function speed_epaviste_admin_notices() {
-    $screen = get_current_screen();
-    if (strpos($screen->id, 'speed-epaviste') !== false) {
-        echo '<div class="admin-notification success fade-in">
-            <i class="fas fa-check-circle"></i>
-            Welcome to Speed Épaviste Pro Dashboard! All systems are running optimally.
-        </div>';
-    }
-}
-add_action('admin_notices', 'speed_epaviste_admin_notices');
