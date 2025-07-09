@@ -3,8 +3,6 @@
 /**
  * Speed Épaviste functions and definitions
  *
- * @link https://developer.wordpress.org/themes/basics/theme-functions/
- *
  * @package Speed_Epaviste
  */
 
@@ -82,14 +80,17 @@ add_action( 'widgets_init', 'speed_epaviste_widgets_init' );
 
 // Enhanced asset loading with proper error handling
 function speed_epaviste_enqueue_assets() {
-    $version = '3.3.0';
+    $version = '3.4.0';
     
     // Critical CSS inline for above-the-fold content
     $critical_css = '
     * { box-sizing: border-box; }
-    body { font-family: Inter, system-ui, sans-serif; margin: 0; background: #f9fafb; }
-    .pro-header { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 40; }
-    .header-container { max-width: 80rem; margin: 0 auto; padding: 0 1rem; }
+    body { font-family: Inter, system-ui, sans-serif; margin: 0; background: #f9fafb; line-height: 1.6; }
+    .hero-section { background: linear-gradient(135deg, #fbbf24, #f59e0b); padding: 4rem 1.5rem; text-align: center; }
+    .hero-section h1 { font-size: 2.5rem; font-weight: 700; color: white; margin-bottom: 1rem; }
+    @media (min-width: 768px) { .hero-section h1 { font-size: 3rem; } }
+    .prose { max-width: none; }
+    .prose p { margin-bottom: 1rem; }
     ';
     wp_add_inline_style( 'wp-block-library', $critical_css );
     
@@ -111,6 +112,7 @@ function speed_epaviste_enqueue_assets() {
     
     // Main stylesheet
     wp_enqueue_style('speed-epaviste-style', get_stylesheet_uri(), array(), $version, 'all');
+    wp_enqueue_style('speed-epaviste-responsive', get_template_directory_uri() . '/css/responsive.css', array(), $version, 'all');
     
     // JavaScript files with proper error handling
     $js_files = array(
@@ -126,19 +128,8 @@ function speed_epaviste_enqueue_assets() {
         }
     }
     
-    // Main JavaScript
-    wp_enqueue_script('speed-epaviste-main', get_template_directory_uri() . '/main.js', array('jquery'), $version, true);
-    
     // Add defer attribute to all theme scripts for better performance
     add_filter('script_loader_tag', 'speed_epaviste_add_defer_attribute', 10, 2);
-    
-    // Localize script for AJAX and theme data
-    wp_localize_script('speed-epaviste-main', 'speedEpavisteTheme', array(
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('speed_epaviste_nonce'),
-        'theme_url' => get_template_directory_uri(),
-        'home_url' => home_url('/')
-    ));
 }
 add_action('wp_enqueue_scripts', 'speed_epaviste_enqueue_assets');
 
@@ -150,334 +141,12 @@ function speed_epaviste_add_defer_attribute($tag, $handle) {
     return $tag;
 }
 
-// Page Builder Functions with enhanced error handling
-function speed_epaviste_save_page_builder() {
-    // Verify nonce for security
-    if (!wp_verify_nonce($_POST['nonce'], 'speed_epaviste_admin_nonce')) {
-        wp_send_json_error('Security check failed');
-        return;
-    }
-    
-    $page_data = json_decode(stripslashes($_POST['page_data']), true);
-    
-    if (!$page_data || !isset($page_data['title']) || !isset($page_data['content'])) {
-        wp_send_json_error('Invalid page data provided');
-        return;
-    }
-    
-    $title = sanitize_text_field($page_data['title']);
-    $content = wp_kses_post($page_data['content']);
-    $timestamp = isset($page_data['timestamp']) ? intval($page_data['timestamp']) : time();
-    
-    // Create or update page
-    $page_args = array(
-        'post_title' => $title,
-        'post_content' => $content,
-        'post_status' => 'publish',
-        'post_type' => 'page',
-        'meta_input' => array(
-            '_speed_epaviste_page_builder' => 1,
-            '_speed_epaviste_builder_data' => $page_data,
-            '_speed_epaviste_last_modified' => $timestamp
-        )
-    );
-    
-    if (isset($page_data['page_id']) && $page_data['page_id']) {
-        $page_args['ID'] = intval($page_data['page_id']);
-    }
-    
-    $page_id = wp_insert_post($page_args);
-    
-    if (is_wp_error($page_id)) {
-        wp_send_json_error('Failed to save page: ' . $page_id->get_error_message());
-    } else {
-        // Generate clean HTML for frontend
-        $clean_content = speed_epaviste_clean_builder_content($content);
-        wp_update_post(array(
-            'ID' => $page_id,
-            'post_content' => $clean_content
-        ));
-        
-        wp_send_json_success(array(
-            'page_id' => $page_id,
-            'edit_url' => admin_url('post.php?post=' . $page_id . '&action=edit'),
-            'view_url' => get_permalink($page_id),
-            'message' => 'Page saved successfully'
-        ));
-    }
-}
-
-function speed_epaviste_create_new_page() {
-    if (!wp_verify_nonce($_POST['nonce'], 'speed_epaviste_admin_nonce')) {
-        wp_send_json_error('Security check failed');
-        return;
-    }
-    
-    $page_id = wp_insert_post(array(
-        'post_title' => 'Nouvelle Page - ' . date('Y-m-d H:i:s'),
-        'post_content' => '<div class="builder-container"><div class="container-placeholder">Commencez à construire votre page</div></div>',
-        'post_status' => 'draft',
-        'post_type' => 'page',
-        'meta_input' => array(
-            '_speed_epaviste_page_builder' => 1
-        )
-    ));
-    
-    if (is_wp_error($page_id)) {
-        wp_send_json_error('Failed to create page: ' . $page_id->get_error_message());
-    } else {
-        wp_send_json_success(array(
-            'page_id' => $page_id,
-            'message' => 'New page created successfully'
-        ));
-    }
-}
-
-function speed_epaviste_load_template() {
-    if (!wp_verify_nonce($_POST['nonce'], 'speed_epaviste_admin_nonce')) {
-        wp_send_json_error('Security check failed');
-        return;
-    }
-    
-    $template_type = sanitize_text_field($_POST['template_type']);
-    
-    $templates = array(
-        'landing' => array(
-            'title' => 'Page d\'Accueil Professionnelle',
-            'content' => '<div class="builder-container"><div class="builder-element hero-section" data-type="hero"><h1>Bienvenue chez Speed Épaviste</h1><p>Service professionnel d\'enlèvement d\'épaves automobile</p><a href="#contact" class="builder-button">Demander un Devis Gratuit</a></div><div class="builder-element services-section" data-type="services"><h2>Nos Services</h2><div class="service-grid"><div class="service-item"><h3>Enlèvement Gratuit</h3><p>Nous récupérons votre véhicule gratuitement</p></div><div class="service-item"><h3>Certificat de Destruction</h3><p>Démarches administratives incluses</p></div></div></div></div>'
-        ),
-        'service' => array(
-            'title' => 'Services d\'Épaviste',
-            'content' => '<div class="builder-container"><div class="builder-element" data-type="heading"><h1>Nos Services Professionnels</h1></div><div class="builder-columns"><div class="column"><h3>Enlèvement d\'Épaves</h3><p>Service rapide et efficace</p></div><div class="column"><h3>Destruction Écologique</h3><p>Recyclage respectueux de l\'environnement</p></div><div class="column"><h3>Certificat Officiel</h3><p>Démarches administratives complètes</p></div></div></div>'
-        ),
-        'contact' => array(
-            'title' => 'Contactez-nous',
-            'content' => '<div class="builder-container"><div class="builder-element" data-type="heading"><h1>Demande de Devis Gratuit</h1></div><div class="builder-element" data-type="contact-form"><form class="builder-form"><div class="form-group"><label>Nom Complet</label><input type="text" name="name" required></div><div class="form-group"><label>Téléphone</label><input type="tel" name="phone" required></div><div class="form-group"><label>Email</label><input type="email" name="email"></div><div class="form-group"><label>Adresse du Véhicule</label><textarea name="address" required></textarea></div><div class="form-group"><label>Description du Véhicule</label><textarea name="description"></textarea></div><button type="submit">Envoyer la Demande</button></form></div></div>'
-        )
-    );
-    
-    if (isset($templates[$template_type])) {
-        wp_send_json_success($templates[$template_type]);
-    } else {
-        wp_send_json_error('Template not found');
-    }
-}
-
-function speed_epaviste_save_as_template() {
-    if (!wp_verify_nonce($_POST['nonce'], 'speed_epaviste_admin_nonce')) {
-        wp_send_json_error('Security check failed');
-        return;
-    }
-    
-    $template_name = sanitize_text_field($_POST['template_name']);
-    $template_content = wp_kses_post($_POST['template_content']);
-    
-    if (!$template_name || !$template_content) {
-        wp_send_json_error('Template name and content are required');
-        return;
-    }
-    
-    $templates = get_option('speed_epaviste_page_templates', array());
-    $templates[sanitize_key($template_name)] = array(
-        'name' => $template_name,
-        'content' => $template_content,
-        'created' => current_time('mysql'),
-        'author' => get_current_user_id()
-    );
-    
-    update_option('speed_epaviste_page_templates', $templates);
-    
-    wp_send_json_success(array(
-        'message' => 'Template saved successfully',
-        'template_id' => sanitize_key($template_name)
-    ));
-}
-
-function speed_epaviste_clean_builder_content($html) {
-    // Remove builder-specific classes and attributes for clean frontend output
-    $html = str_replace('builder-element', 'page-element', $html);
-    $html = preg_replace('/data-type="[^"]*"/', '', $html);
-    $html = preg_replace('/data-id="[^"]*"/', '', $html);
-    $html = str_replace('contenteditable="true"', '', $html);
-    
-    // Clean up extra spaces and formatting
-    $html = preg_replace('/\s+/', ' ', $html);
-    $html = str_replace('> <', '><', $html);
-    
-    // Wrap in semantic HTML structure
-    $html = '<article class="page-builder-content" role="main">' . $html . '</article>';
-    
-    return $html;
-}
-
-// Add enhanced Page Builder styles to frontend
-function speed_epaviste_frontend_page_builder_styles() {
-    if (is_page() && get_post_meta(get_the_ID(), '_speed_epaviste_page_builder', true)) {
-        echo '<style>
-        .page-builder-content { 
-            max-width: 100%; 
-            font-family: Inter, system-ui, sans-serif;
-        }
-        .page-element { 
-            position: relative; 
-            margin-bottom: 2rem;
-        }
-        .builder-container { 
-            width: 100%; 
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-        .builder-columns { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem; 
-            margin: 2rem 0;
-        }
-        .builder-columns > div { 
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .builder-button { 
-            display: inline-block; 
-            background: linear-gradient(135deg, #6366f1, #4f46e5);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            text-decoration: none; 
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        .builder-button:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            color: white;
-        }
-        .builder-form { 
-            max-width: 600px; 
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .builder-form .form-group { 
-            margin-bottom: 1.5rem; 
-        }
-        .builder-form label { 
-            display: block; 
-            margin-bottom: 0.75rem; 
-            font-weight: 600; 
-            color: #374151;
-        }
-        .builder-form input, 
-        .builder-form textarea, 
-        .builder-form select { 
-            width: 100%; 
-            padding: 1rem; 
-            border: 2px solid #e5e7eb; 
-            border-radius: 8px; 
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-        .builder-form input:focus,
-        .builder-form textarea:focus,
-        .builder-form select:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-        }
-        .builder-form button { 
-            background: linear-gradient(135deg, #6366f1, #4f46e5);
-            color: white; 
-            border: none; 
-            padding: 1rem 2rem; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        .builder-form button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-        .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-            padding: 4rem 2rem;
-            border-radius: 12px;
-            margin-bottom: 3rem;
-        }
-        .hero-section h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-        .hero-section p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        .services-section {
-            padding: 3rem 0;
-        }
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        .service-item {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .service-item h3 {
-            color: #6366f1;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        @media (max-width: 768px) {
-            .builder-columns { 
-                grid-template-columns: 1fr;
-            }
-            .hero-section h1 {
-                font-size: 2rem;
-            }
-            .service-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        </style>';
-    }
-}
-add_action('wp_head', 'speed_epaviste_frontend_page_builder_styles');
-
-// Register Page Builder AJAX handlers
-add_action('wp_ajax_save_page_builder', 'speed_epaviste_save_page_builder');
-add_action('wp_ajax_load_page_builder', 'speed_epaviste_load_page_builder');
-add_action('wp_ajax_save_page_template', 'speed_epaviste_save_page_template');
-add_action('wp_ajax_load_page_templates', 'speed_epaviste_load_page_templates');
-add_action('wp_ajax_create_new_page', 'speed_epaviste_create_new_page');
-add_action('wp_ajax_load_template', 'speed_epaviste_load_template');
-add_action('wp_ajax_save_as_template', 'speed_epaviste_save_as_template');
-
 // Include refactored function files
 $function_files = array(
-    'inc/admin-functions.php',
+    'inc/seo-functions.php',
     'inc/performance-functions.php',
-    'inc/ai-functions.php',
-    'inc/email-functions.php',
-    'inc/file-functions.php',
-    'inc/chat-functions.php'
+    'inc/template-functions.php',
+    'inc/template-tags.php'
 );
 
 foreach ($function_files as $file) {
@@ -487,24 +156,47 @@ foreach ($function_files as $file) {
     }
 }
 
-// Template includes with error handling
-$template_files = array(
-    'inc/custom-header.php',
-    'inc/template-tags.php',
-    'inc/template-functions.php',
-    'inc/customizer.php'
-);
-
-foreach ($template_files as $file) {
-    $full_path = get_template_directory() . '/' . $file;
-    if (file_exists($full_path)) {
-        require $full_path;
+// Contact form handler
+function speed_epaviste_handle_contact_form() {
+    if (!isset($_POST['contact_form_nonce']) || !wp_verify_nonce($_POST['contact_form_nonce'], 'contact_form_action')) {
+        wp_die('Security check failed');
     }
+    
+    $name = sanitize_text_field($_POST['name']);
+    $email = sanitize_email($_POST['email']);
+    $phone = sanitize_text_field($_POST['phone']);
+    $address = sanitize_textarea_field($_POST['address']);
+    $vehicle_info = sanitize_textarea_field($_POST['vehicle_info']);
+    $message = sanitize_textarea_field($_POST['message']);
+    
+    // Save to database or send email
+    $contact_data = array(
+        'name' => $name,
+        'email' => $email,
+        'phone' => $phone,
+        'address' => $address,
+        'vehicle_info' => $vehicle_info,
+        'message' => $message,
+        'date' => current_time('mysql')
+    );
+    
+    // You can add email sending or database saving logic here
+    
+    wp_redirect(add_query_arg('contact_sent', '1', wp_get_referer()));
+    exit;
 }
+add_action('admin_post_contact_form', 'speed_epaviste_handle_contact_form');
+add_action('admin_post_nopriv_contact_form', 'speed_epaviste_handle_contact_form');
 
-if ( defined( 'JETPACK__VERSION' ) ) {
-    $jetpack_file = get_template_directory() . '/inc/jetpack.php';
-    if (file_exists($jetpack_file)) {
-        require $jetpack_file;
-    }
-}
+// Remove unnecessary WordPress features for better performance
+remove_action('wp_head', 'rsd_link');
+remove_action('wp_head', 'wlwmanifest_link');
+remove_action('wp_head', 'wp_generator');
+remove_action('wp_head', 'start_post_rel_link');
+remove_action('wp_head', 'index_rel_link');
+remove_action('wp_head', 'adjacent_posts_rel_link');
+remove_action('wp_head', 'wp_shortlink_wp_head');
+
+// Disable emoji scripts for better performance
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('wp_print_styles', 'print_emoji_styles');
