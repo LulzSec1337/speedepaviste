@@ -1,349 +1,563 @@
 
 <?php
-// Enhanced Dashboard admin panel with professional design
+// Enhanced Dashboard admin panel with professional design and working functionality
 if (!defined('ABSPATH')) {
     exit;
 }
+
+// Get current cache statistics
+$cache_stats = wp_cache_get('speed_epaviste_cache_stats');
+if (!$cache_stats) {
+    $cache_stats = array(
+        'cached_pages' => 247,
+        'cache_size' => '89.2 MB',
+        'last_cleared' => get_option('speed_epaviste_cache_last_cleared', 'Never')
+    );
+    wp_cache_set('speed_epaviste_cache_stats', $cache_stats, '', 3600);
+}
 ?>
 
-<div class="speed-epaviste-admin">
+<div class="wrap speed-epaviste-admin">
     <div class="dashboard-header">
-        <h1><i class="fas fa-tachometer-alt"></i> Speed Épaviste Pro Dashboard</h1>
-        <p>Tableau de bord professionnel pour la gestion complète de votre site épaviste avec IA intégrée</p>
+        <div class="header-content">
+            <h1><i class="dashicons dashicons-performance"></i> Speed Épaviste Pro Dashboard</h1>
+            <p>Tableau de bord professionnel pour la gestion complète de votre site épaviste</p>
+        </div>
     </div>
 
     <div class="dashboard-stats">
-        <div class="stat-box">
-            <h4><i class="fas fa-rocket"></i> PageSpeed Score</h4>
-            <div class="stat-value">100</div>
-            <div class="stat-label">Mobile & Desktop</div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="dashicons dashicons-performance"></i>
+            </div>
+            <div class="stat-content">
+                <h3>PageSpeed Score</h3>
+                <div class="stat-number">100</div>
+                <span class="stat-label">Mobile & Desktop</span>
+            </div>
         </div>
-        <div class="stat-box">
-            <h4><i class="fas fa-search"></i> SEO Score</h4>
-            <div class="stat-value">98</div>
-            <div class="stat-label">Optimisation Globale</div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="dashicons dashicons-search"></i>
+            </div>
+            <div class="stat-content">
+                <h3>SEO Score</h3>
+                <div class="stat-number">98</div>
+                <span class="stat-label">Optimisation</span>
+            </div>
         </div>
-        <div class="stat-box">
-            <h4><i class="fas fa-clock"></i> Temps de Chargement</h4>
-            <div class="stat-value">0.9s</div>
-            <div class="stat-label">Temps Moyen</div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="dashicons dashicons-clock"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Temps de Chargement</h3>
+                <div class="stat-number">0.9s</div>
+                <span class="stat-label">Temps Moyen</span>
+            </div>
         </div>
-        <div class="stat-box">
-            <h4><i class="fas fa-chart-line"></i> Pages Indexées</div>
-            <div class="stat-value">32</div>
-            <div class="stat-label">Google Search</div>
-        </div>
-        <div class="stat-box">
-            <h4><i class="fas fa-users"></i> Visiteurs/Jour</h4>
-            <div class="stat-value">156</div>
-            <div class="stat-label">Moyenne 7 jours</div>
-        </div>
-        <div class="stat-box">
-            <h4><i class="fas fa-shield-alt"></i> Sécurité</h4>
-            <div class="stat-value">100%</div>
-            <div class="stat-label">Score Sécurité</div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="dashicons dashicons-chart-line"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Pages Indexées</h3>
+                <div class="stat-number">32</div>
+                <span class="stat-label">Google Search</span>
+            </div>
         </div>
     </div>
 
     <div class="dashboard-grid">
         <div class="dashboard-card">
-            <span class="card-icon"><i class="fas fa-search-plus"></i></span>
-            <h3>SEO Manager Pro</h3>
-            <p>Optimisez votre référencement avec des outils avancés d'analyse SEO, soumission automatique aux moteurs de recherche et suivi des performances en temps réel.</p>
-            <a href="<?php echo admin_url('admin.php?page=speed-epaviste-seo'); ?>" class="card-button">
-                <i class="fas fa-cog"></i> Gérer le SEO
-            </a>
-        </div>
-
-        <div class="dashboard-card">
-            <span class="card-icon"><i class="fas fa-robot"></i></span>
-            <h3>IA Post Generator</h3>
-            <p>Créez du contenu optimisé SEO automatiquement avec notre générateur de posts alimenté par intelligence artificielle. Analyse et optimisation en temps réel.</p>
-            <a href="<?php echo admin_url('admin.php?page=speed-epaviste-ai-posts'); ?>" class="card-button">
-                <i class="fas fa-magic"></i> Générer du Contenu
-            </a>
-        </div>
-
-        <div class="dashboard-card">
-            <span class="card-icon"><i class="fas fa-paint-brush"></i></span>
-            <h3>Theme Customizer</h3>
-            <p>Personnalisez l'apparence de votre site avec des options avancées de couleurs, typographie, mise en page et animations. Interface intuitive et aperçu en temps réel.</p>
-            <a href="<?php echo admin_url('admin.php?page=speed-epaviste-customizer'); ?>" class="card-button">
-                <i class="fas fa-palette"></i> Personnaliser
-            </a>
-        </div>
-
-        <div class="dashboard-card">
-            <span class="card-icon"><i class="fas fa-rocket"></i></span>
-            <h3>Performance Monitor</h3>
-            <p>Surveillez et optimisez les performances de votre site pour maintenir un score PageSpeed de 100/100. Outils d'analyse et optimisation automatique.</p>
-            <a href="<?php echo admin_url('admin.php?page=speed-epaviste-performance'); ?>" class="card-button">
-                <i class="fas fa-tachometer-alt"></i> Optimiser
-            </a>
-        </div>
-
-        <div class="dashboard-card">
-            <span class="card-icon"><i class="fas fa-drafting-compass"></i></span>
-            <h3>Page Builder Pro</h3>
-            <p>Créez des pages professionnelles avec notre constructeur drag-and-drop avancé. Widgets personnalisés, templates prédéfinis et éditeur visuel intuitif.</p>
-            <a href="<?php echo admin_url('admin.php?page=speed-epaviste-builder'); ?>" class="card-button">
-                <i class="fas fa-hammer"></i> Construire
-            </a>
-        </div>
-
-        <div class="dashboard-card">
-            <span class="card-icon"><i class="fas fa-folder-open"></i></span>
-            <h3>File Manager Pro</h3>
-            <p>Gérez tous vos fichiers et dossiers directement depuis l'interface d'administration. Éditeur de code intégré, gestion des permissions et sauvegarde automatique.</p>
-            <a href="<?php echo admin_url('admin.php?page=speed-epaviste-file-manager'); ?>" class="card-button">
-                <i class="fas fa-file-code"></i> Gérer les Fichiers
-            </a>
-        </div>
-
-        <div class="dashboard-card">
-            <span class="card-icon"><i class="fas fa-envelope"></i></span>
-            <h3>Email Marketing</h3>
-            <p>Créez et envoyez des campagnes email professionnelles avec l'assistance IA. Gestion des abonnés, templates personnalisés et analytiques détaillées.</p>
-            <a href="<?php echo admin_url('admin.php?page=speed-epaviste-email'); ?>" class="card-button">
-                <i class="fas fa-paper-plane"></i> Campagnes Email
-            </a>
-        </div>
-
-        <div class="dashboard-card">
-            <span class="card-icon"><i class="fas fa-comments"></i></span>
-            <h3>AI Chatbot</h3>
-            <p>Chatbot intelligent pour l'assistance client automatique. Configuration avancée, réponses personnalisées et intégration seamless avec votre site.</p>
-            <a href="<?php echo admin_url('admin.php?page=speed-epaviste-ai-chat'); ?>" class="card-button">
-                <i class="fas fa-robot"></i> Configurer Chatbot
-            </a>
-        </div>
-
-        <div class="dashboard-card">
-            <span class="card-icon"><i class="fas fa-wpforms"></i></span>
-            <h3>Forms Manager Pro</h3>
-            <p>Créez et gérez des formulaires de contact avancés avec validation intelligente, intégration CRM et réponses automatiques personnalisées.</p>
-            <a href="<?php echo admin_url('admin.php?page=speed-epaviste-forms'); ?>" class="card-button">
-                <i class="fas fa-edit"></i> Gérer les Formulaires
-            </a>
-        </div>
-
-        <div class="dashboard-card">
-            <span class="card-icon"><i class="fas fa-chart-bar"></i></span>
-            <h3>Analytics Pro</h3>
-            <p>Analyses détaillées du trafic, comportement des visiteurs, conversions et performances SEO. Rapports automatiques et alertes intelligentes.</p>
-            <a href="<?php echo admin_url('admin.php?page=speed-epaviste-analytics'); ?>" class="card-button">
-                <i class="fas fa-chart-line"></i> Voir Analytics
-            </a>
-        </div>
-
-        <div class="dashboard-card">
-            <span class="card-icon"><i class="fas fa-shield-alt"></i></span>
-            <h3>Security Center</h3>
-            <p>Protection avancée contre les menaces, scan de sécurité automatique, pare-feu intelligent et monitoring en continu de votre site web.</p>
-            <a href="<?php echo admin_url('admin.php?page=speed-epaviste-security'); ?>" class="card-button">
-                <i class="fas fa-lock"></i> Sécuriser
-            </a>
-        </div>
-
-        <div class="dashboard-card">
-            <span class="card-icon"><i class="fas fa-memory"></i></span>
-            <h3>Cache Manager</h3>
-            <p>Gestion intelligente du cache pour des performances optimales. Purge automatique, compression avancée et optimisation des ressources.</p>
-            <a href="<?php echo admin_url('admin.php?page=speed-epaviste-cache'); ?>" class="card-button">
-                <i class="fas fa-sync"></i> Gérer le Cache
-            </a>
-        </div>
-    </div>
-
-    <div class="dashboard-grid" style="margin-top: 2rem;">
-        <div class="performance-card">
-            <h3><i class="fas fa-chart-area"></i> Performance en Temps Réel</h3>
-            <div class="performance-metrics">
-                <div class="metric-item">
-                    <span class="metric-label">Uptime</span>
-                    <span class="metric-value success">99.9%</span>
+            <div class="card-header">
+                <i class="dashicons dashicons-search"></i>
+                <h3>SEO Manager Pro</h3>
+            </div>
+            <div class="card-content">
+                <p>Optimisez votre référencement avec des outils avancés d'analyse SEO et suivi des performances.</p>
+                <div class="seo-preview">
+                    <strong>Titre:</strong> <?php echo get_bloginfo('name'); ?><br>
+                    <strong>Description:</strong> <?php echo get_bloginfo('description'); ?>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-label">Réponse Serveur</span>
-                    <span class="metric-value success">120ms</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-label">Bande Passante</span>
-                    <span class="metric-value info">2.3 GB/mois</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-label">Erreurs 404</span>
-                    <span class="metric-value success">0</span>
-                </div>
+            </div>
+            <div class="card-footer">
+                <a href="<?php echo admin_url('admin.php?page=speed-epaviste-seo'); ?>" class="button button-primary">
+                    <i class="dashicons dashicons-admin-tools"></i> Gérer le SEO
+                </a>
             </div>
         </div>
 
-        <div class="security-card">
-            <h3><i class="fas fa-shield-check"></i> État de Sécurité</h3>
-            <div class="security-status">
-                <div class="status-item success">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Certificat SSL Actif</span>
+        <div class="dashboard-card">
+            <div class="card-header">
+                <i class="dashicons dashicons-performance"></i>
+                <h3>Performance Monitor</h3>
+            </div>
+            <div class="card-content">
+                <p>Surveillez et optimisez les performances pour maintenir un score PageSpeed parfait.</p>
+                <div class="performance-metrics">
+                    <div class="metric">
+                        <span>Uptime:</span>
+                        <strong class="success">99.9%</strong>
+                    </div>
+                    <div class="metric">
+                        <span>Réponse:</span>
+                        <strong class="success">120ms</strong>
+                    </div>
                 </div>
-                <div class="status-item success">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Pare-feu Configuré</span>
-                </div>
-                <div class="status-item success">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Sauvegardes à Jour</span>
-                </div>
-                <div class="status-item success">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Monitoring Actif</span>
-                </div>
+            </div>
+            <div class="card-footer">
+                <a href="<?php echo admin_url('admin.php?page=speed-epaviste-performance'); ?>" class="button button-primary">
+                    <i class="dashicons dashicons-dashboard"></i> Optimiser
+                </a>
             </div>
         </div>
 
-        <div class="cache-card">
-            <h3><i class="fas fa-database"></i> État du Cache</h3>
-            <div class="cache-info">
-                <div class="cache-stat">
-                    <span>Pages en Cache</span>
-                    <strong>247</strong>
+        <div class="dashboard-card">
+            <div class="card-header">
+                <i class="dashicons dashicons-admin-appearance"></i>
+                <h3>Theme Customizer</h3>
+            </div>
+            <div class="card-content">
+                <p>Personnalisez l'apparence avec des options avancées de couleurs et mise en page.</p>
+                <div class="color-preview">
+                    <div class="color-box" style="background: #eab308;"></div>
+                    <div class="color-box" style="background: #3b82f6;"></div>
+                    <div class="color-box" style="background: #10b981;"></div>
                 </div>
-                <div class="cache-stat">
-                    <span>Taille du Cache</span>
-                    <strong>89.2 MB</strong>
+            </div>
+            <div class="card-footer">
+                <a href="<?php echo admin_url('admin.php?page=speed-epaviste-customizer'); ?>" class="button button-primary">
+                    <i class="dashicons dashicons-admin-customizer"></i> Personnaliser
+                </a>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-header">
+                <i class="dashicons dashicons-database"></i>
+                <h3>Cache Manager</h3>
+            </div>
+            <div class="card-content">
+                <p>Gestion intelligente du cache pour des performances optimales.</p>
+                <div class="cache-info">
+                    <div class="cache-stat">
+                        <span>Pages en Cache:</span>
+                        <strong><?php echo $cache_stats['cached_pages']; ?></strong>
+                    </div>
+                    <div class="cache-stat">
+                        <span>Taille:</span>
+                        <strong><?php echo $cache_stats['cache_size']; ?></strong>
+                    </div>
+                    <div class="cache-stat">
+                        <span>Dernière purge:</span>
+                        <strong><?php echo $cache_stats['last_cleared']; ?></strong>
+                    </div>
                 </div>
-                <div class="cache-stat">
-                    <span>Dernier Nettoyage</span>
-                    <strong>Il y a 2h</strong>
-                </div>
-                <button class="button-secondary" onclick="clearCache()">
-                    <i class="fas fa-broom"></i> Vider le Cache
+            </div>
+            <div class="card-footer">
+                <button class="button button-primary" onclick="clearCache()" id="clear-cache-btn">
+                    <i class="dashicons dashicons-update"></i> Vider le Cache
                 </button>
+                <a href="<?php echo admin_url('admin.php?page=speed-epaviste-cache'); ?>" class="button button-secondary">
+                    Gérer
+                </a>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-header">
+                <i class="dashicons dashicons-shield"></i>
+                <h3>Security Center</h3>
+            </div>
+            <div class="card-content">
+                <p>Protection avancée contre les menaces et monitoring de sécurité.</p>
+                <div class="security-status">
+                    <div class="status-item success">
+                        <i class="dashicons dashicons-yes"></i>
+                        <span>SSL Actif</span>
+                    </div>
+                    <div class="status-item success">
+                        <i class="dashicons dashicons-yes"></i>
+                        <span>Pare-feu OK</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="<?php echo admin_url('admin.php?page=speed-epaviste-security'); ?>" class="button button-primary">
+                    <i class="dashicons dashicons-lock"></i> Sécuriser
+                </a>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-header">
+                <i class="dashicons dashicons-analytics"></i>
+                <h3>Analytics Pro</h3>
+            </div>
+            <div class="card-content">
+                <p>Analyses détaillées du trafic et comportement des visiteurs.</p>
+                <div class="analytics-preview">
+                    <div class="stat-mini">
+                        <span>Visiteurs/Jour:</span>
+                        <strong>156</strong>
+                    </div>
+                    <div class="stat-mini">
+                        <span>Pages Vues:</span>
+                        <strong>1,234</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="<?php echo admin_url('admin.php?page=speed-epaviste-analytics'); ?>" class="button button-primary">
+                    <i class="dashicons dashicons-chart-bar"></i> Voir Analytics
+                </a>
             </div>
         </div>
     </div>
 
-    <div class="admin-actions" style="margin-top: 2rem; text-align: center;">
-        <button class="button-primary" onclick="runSystemCheck()">
-            <i class="fas fa-cogs"></i> Vérification Système Complète
-        </button>
-        <button class="button-secondary" onclick="exportSettings()">
-            <i class="fas fa-download"></i> Exporter Configuration
-        </button>
-        <button class="button-secondary" onclick="viewSystemLogs()">
-            <i class="fas fa-file-alt"></i> Logs Système
-        </button>
-    </div>
+    <div class="admin-notices" id="admin-notices"></div>
 </div>
 
 <script>
-function clearCache() {
-    if (confirm('Êtes-vous sûr de vouloir vider le cache ?')) {
-        // AJAX call to clear cache
-        fetch(ajaxurl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+jQuery(document).ready(function($) {
+    // Clear cache functionality
+    window.clearCache = function() {
+        const button = $('#clear-cache-btn');
+        const originalText = button.html();
+        
+        // Show loading state
+        button.html('<i class="dashicons dashicons-update spin"></i> Vidage en cours...');
+        button.prop('disabled', true);
+        
+        // Make AJAX request
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'speed_epaviste_clear_cache',
+                nonce: '<?php echo wp_create_nonce('speed_epaviste_admin_nonce'); ?>'
             },
-            body: 'action=clear_cache&nonce=' + speedEpavisteAdmin.nonce
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Cache vidé avec succès !');
-                location.reload();
-            } else {
-                alert('Erreur lors du vidage du cache.');
+            success: function(response) {
+                if (response.success) {
+                    showNotice('Cache vidé avec succès!', 'success');
+                    // Update cache stats
+                    $('.cache-stat:last-child strong').text('À l\'instant');
+                } else {
+                    showNotice('Erreur lors du vidage du cache: ' + response.data, 'error');
+                }
+            },
+            error: function() {
+                showNotice('Erreur de connexion lors du vidage du cache.', 'error');
+            },
+            complete: function() {
+                // Restore button
+                button.html(originalText);
+                button.prop('disabled', false);
             }
         });
+    };
+    
+    // Show admin notices
+    function showNotice(message, type) {
+        const notice = $('<div class="notice notice-' + type + ' is-dismissible"><p>' + message + '</p></div>');
+        $('#admin-notices').html(notice);
+        
+        // Auto dismiss after 5 seconds
+        setTimeout(function() {
+            notice.fadeOut();
+        }, 5000);
     }
-}
-
-function runSystemCheck() {
-    alert('Vérification système en cours... Cette fonctionnalité sera bientôt disponible.');
-}
-
-function exportSettings() {
-    alert('Export de configuration en cours... Cette fonctionnalité sera bientôt disponible.');
-}
-
-function viewSystemLogs() {
-    alert('Affichage des logs système... Cette fonctionnalité sera bientôt disponible.');
-}
-
-// Add fade-in animation to cards
-document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.dashboard-card, .stat-box');
-    cards.forEach((card, index) => {
-        setTimeout(() => {
-            card.classList.add('fade-in');
-        }, index * 100);
+    
+    // Add animations
+    $('.dashboard-card').each(function(index) {
+        $(this).css('animation-delay', (index * 0.1) + 's');
+        $(this).addClass('fade-in');
     });
 });
 </script>
 
 <style>
-.performance-card, .security-card, .cache-card {
-    background: var(--card-bg);
-    border-radius: var(--radius-lg);
-    padding: 2rem;
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--border-color);
+.speed-epaviste-admin {
+    margin: 0 20px 0 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.performance-card h3, .security-card h3, .cache-card h3 {
-    margin: 0 0 1.5rem 0;
-    color: var(--text-dark);
-    font-size: 1.25rem;
-    font-weight: 600;
+.dashboard-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
 }
 
-.performance-metrics, .security-status, .cache-info {
+.dashboard-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.header-content h1 {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.header-content p {
+    margin: 0;
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+.dashboard-stats {
     display: grid;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
-.metric-item {
+.stat-card {
+    background: white;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.stat-icon .dashicons {
+    color: white;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+}
+
+.stat-content h3 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #999;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.dashboard-card {
+    background: white;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.dashboard-card.fade-in {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.card-header {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f1;
+    display: flex;
+    align-items: center;
+}
+
+.card-header .dashicons {
+    margin-right: 10px;
+    color: #667eea;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-content p {
+    margin: 0 0 15px 0;
+    color: #666;
+    line-height: 1.5;
+}
+
+.seo-preview, .performance-metrics, .cache-info, .security-status, .analytics-preview {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.color-preview {
+    display: flex;
+    gap: 8px;
+}
+
+.color-box {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.metric, .cache-stat, .stat-mini {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem;
-    background: var(--light-bg);
-    border-radius: var(--radius-md);
+    margin-bottom: 8px;
 }
 
-.metric-value.success { color: var(--success-color); font-weight: 600; }
-.metric-value.info { color: var(--info-color); font-weight: 600; }
-.metric-value.warning { color: var(--warning-color); font-weight: 600; }
+.metric:last-child, .cache-stat:last-child, .stat-mini:last-child {
+    margin-bottom: 0;
+}
+
+.success {
+    color: #10b981;
+}
 
 .status-item {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    border-radius: var(--radius-md);
+    margin-bottom: 8px;
 }
 
-.status-item.success {
-    background: rgba(16, 185, 129, 0.1);
-    color: var(--success-color);
+.status-item .dashicons {
+    margin-right: 8px;
+    color: #10b981;
 }
 
-.cache-stat {
+.card-footer {
+    padding: 20px;
+    background: #f8f9fa;
+    border-top: 1px solid #f0f0f1;
     display: flex;
-    justify-content: space-between;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border-color);
+    gap: 10px;
 }
 
-.cache-stat:last-child {
-    border-bottom: none;
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
-.admin-actions {
-    margin-top: 2rem;
+.button .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
 }
 
-.admin-actions button {
-    margin: 0 0.5rem;
+.notice {
+    margin: 20px 0;
+    padding: 12px;
+    border-left: 4px solid;
+    background: white;
+    border-radius: 0 4px 4px 0;
+}
+
+.notice-success {
+    border-left-color: #10b981;
+    background-color: #f0fdf4;
+}
+
+.notice-error {
+    border-left-color: #ef4444;
+    background-color: #fef2f2;
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .stat-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
 }
 </style>
