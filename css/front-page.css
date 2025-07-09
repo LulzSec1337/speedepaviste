@@ -1,0 +1,192 @@
+
+/*
+Front Page and Footer Styles - Optimized for PageSpeed
+*/
+
+/* Hero Section Animations */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out;
+}
+
+/* Service Cards */
+.service-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #facc15, #eab308);
+  color: #000;
+  box-shadow: 0 4px 14px 0 rgba(250, 204, 21, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #eab308, #ca8a04);
+  box-shadow: 0 6px 20px 0 rgba(250, 204, 21, 0.4);
+  transform: translateY(-2px);
+  color: #000;
+  text-decoration: none;
+}
+
+.btn-secondary {
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  text-decoration: none;
+}
+
+/* Hero Section Responsive */
+.hero-section {
+  position: relative;
+  background-attachment: fixed;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    background-attachment: scroll;
+  }
+}
+
+/* Contact Section */
+.contact-section {
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+}
+
+/* Footer Enhancements */
+.site-footer {
+  position: relative;
+  background: linear-gradient(135deg, #111827, #1f2937, #374151);
+}
+
+/* Back to top button */
+#back-to-top {
+  will-change: transform;
+}
+
+/* Smooth scrolling for modern browsers */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Performance optimizations */
+.service-card,
+.btn,
+#back-to-top {
+  will-change: transform;
+}
+
+/* Lazy loading compatibility */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* Print styles */
+@media print {
+  .hero-section,
+  .service-card,
+  #back-to-top {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+  
+  .btn {
+    border: 1px solid black !important;
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .service-card,
+  .btn,
+  #back-to-top {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .btn-primary {
+    background: #000;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+  
+  .service-card {
+    border: 2px solid #000;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .hero-section {
+    padding: 3rem 1rem;
+  }
+  
+  .service-card {
+    margin-bottom: 1rem;
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero-section {
+    padding: 4rem 2rem;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1025px) {
+  .service-card:hover {
+    transform: translateY(-12px) scale(1.02);
+  }
+  
+  .btn:hover {
+    transform: translateY(-3px) scale(1.05);
+  }
+}
