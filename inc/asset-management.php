@@ -1,0 +1,77 @@
+
+<?php
+/**
+ * Asset management functions for CSS and JavaScript
+ * 
+ * @package Speed_Epaviste
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+/**
+ * Enhanced asset loading with proper error handling
+ */
+function speed_epaviste_enqueue_assets() {
+    $version = '3.4.0';
+    
+    // Critical CSS inline for above-the-fold content
+    $critical_css = '
+    * { box-sizing: border-box; }
+    body { font-family: Inter, system-ui, sans-serif; margin: 0; background: #f9fafb; line-height: 1.6; }
+    .hero-section { background: linear-gradient(135deg, #fbbf24, #f59e0b); padding: 4rem 1.5rem; text-align: center; }
+    .hero-section h1 { font-size: 2.5rem; font-weight: 700; color: white; margin-bottom: 1rem; }
+    @media (min-width: 768px) { .hero-section h1 { font-size: 3rem; } }
+    .prose { max-width: none; }
+    .prose p { margin-bottom: 1rem; }
+    ';
+    wp_add_inline_style('wp-block-library', $critical_css);
+    
+    // Check if CSS files exist before enqueuing
+    $css_files = array(
+        'speed-epaviste-base' => 'css/base.css',
+        'speed-epaviste-header' => 'css/header.css',
+        'speed-epaviste-components' => 'css/components.css',
+        'speed-epaviste-responsive' => 'css/responsive.css',
+        'speed-epaviste-animations' => 'css/animations.css'
+    );
+    
+    foreach ($css_files as $handle => $file_path) {
+        $full_path = get_template_directory() . '/' . $file_path;
+        if (file_exists($full_path)) {
+            wp_enqueue_style($handle, get_template_directory_uri() . '/' . $file_path, array(), $version, 'all');
+        }
+    }
+    
+    // Main stylesheet
+    wp_enqueue_style('speed-epaviste-style', get_stylesheet_uri(), array(), $version, 'all');
+    
+    // JavaScript files with proper error handling
+    $js_files = array(
+        'speed-epaviste-core' => 'js/core.js',
+        'speed-epaviste-animations' => 'js/animations.js',
+        'speed-epaviste-performance' => 'js/performance.js'
+    );
+    
+    foreach ($js_files as $handle => $file_path) {
+        $full_path = get_template_directory() . '/' . $file_path;
+        if (file_exists($full_path)) {
+            wp_enqueue_script($handle, get_template_directory_uri() . '/' . $file_path, array('jquery'), $version, true);
+        }
+    }
+    
+    // Add defer attribute to all theme scripts for better performance
+    add_filter('script_loader_tag', 'speed_epaviste_add_defer_attribute', 10, 2);
+}
+add_action('wp_enqueue_scripts', 'speed_epaviste_enqueue_assets');
+
+/**
+ * Add defer attribute to scripts for better PageSpeed
+ */
+function speed_epaviste_add_defer_attribute($tag, $handle) {
+    if (strpos($handle, 'speed-epaviste') !== false) {
+        return str_replace(' src', ' defer src', $tag);
+    }
+    return $tag;
+}
