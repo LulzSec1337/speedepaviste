@@ -14,19 +14,24 @@ if (!defined('ABSPATH')) {
  * Enhanced asset loading with proper error handling
  */
 function speed_epaviste_enqueue_assets() {
-    $version = '3.4.0';
+    $version = '3.5.0';
     
     // Critical CSS inline for above-the-fold content
     $critical_css = '
     * { box-sizing: border-box; }
     body { font-family: Inter, system-ui, sans-serif; margin: 0; background: #f9fafb; line-height: 1.6; }
+    .header-container { background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+    .header-content { display: flex; justify-content: space-between; align-items: center; min-height: 70px; }
+    .desktop-nav { display: none; }
+    @media (min-width: 768px) { .desktop-nav { display: flex; } }
     .hero-section { background: linear-gradient(135deg, #fbbf24, #f59e0b); padding: 4rem 1.5rem; text-align: center; }
     .hero-section h1 { font-size: 2.5rem; font-weight: 700; color: white; margin-bottom: 1rem; }
     @media (min-width: 768px) { .hero-section h1 { font-size: 3rem; } }
-    .prose { max-width: none; }
-    .prose p { margin-bottom: 1rem; }
     ';
     wp_add_inline_style('wp-block-library', $critical_css);
+    
+    // Main stylesheet first
+    wp_enqueue_style('speed-epaviste-style', get_stylesheet_uri(), array(), $version, 'all');
     
     // Check if CSS files exist before enqueuing
     $css_files = array(
@@ -40,12 +45,9 @@ function speed_epaviste_enqueue_assets() {
     foreach ($css_files as $handle => $file_path) {
         $full_path = get_template_directory() . '/' . $file_path;
         if (file_exists($full_path)) {
-            wp_enqueue_style($handle, get_template_directory_uri() . '/' . $file_path, array(), $version, 'all');
+            wp_enqueue_style($handle, get_template_directory_uri() . '/' . $file_path, array('speed-epaviste-style'), $version, 'all');
         }
     }
-    
-    // Main stylesheet
-    wp_enqueue_style('speed-epaviste-style', get_stylesheet_uri(), array(), $version, 'all');
     
     // JavaScript files with proper error handling
     $js_files = array(
@@ -61,6 +63,12 @@ function speed_epaviste_enqueue_assets() {
         }
     }
     
+    // Enhanced admin scripts
+    if (is_admin()) {
+        wp_enqueue_script('speed-epaviste-admin-enhanced', get_template_directory_uri() . '/js/admin-enhanced.js', array('jquery'), $version, true);
+        wp_enqueue_style('speed-epaviste-admin-velonic', get_template_directory_uri() . '/admin-style-velonic.css', array(), $version, 'all');
+    }
+    
     // Add defer attribute to all theme scripts for better performance
     add_filter('script_loader_tag', 'speed_epaviste_add_defer_attribute', 10, 2);
 }
@@ -70,8 +78,17 @@ add_action('wp_enqueue_scripts', 'speed_epaviste_enqueue_assets');
  * Add defer attribute to scripts for better PageSpeed
  */
 function speed_epaviste_add_defer_attribute($tag, $handle) {
-    if (strpos($handle, 'speed-epaviste') !== false) {
+    if (strpos($handle, 'speed-epaviste') !== false && !is_admin()) {
         return str_replace(' src', ' defer src', $tag);
     }
     return $tag;
 }
+
+/**
+ * Preload critical assets
+ */
+function speed_epaviste_preload_assets() {
+    echo '<link rel="preload" href="' . get_template_directory_uri() . '/css/header.css" as="style">';
+    echo '<link rel="preload" href="' . get_template_directory_uri() . '/css/base.css" as="style">';
+}
+add_action('wp_head', 'speed_epaviste_preload_assets', 1);
