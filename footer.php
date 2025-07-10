@@ -1,248 +1,213 @@
-
 <?php
 /**
  * The template for displaying the footer
+ * Speed Épaviste Pro - Professional footer
  */
 ?>
 
-<footer id="colophon" class="site-footer bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
-    <!-- Background decorative elements -->
-    <div class="absolute top-0 left-0 w-72 h-72 bg-yellow-400 opacity-5 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 w-96 h-96 bg-yellow-300 opacity-5 rounded-full blur-3xl"></div>
-    
-    <div class="relative z-10">
-        <!-- Main Footer Content -->
-        <div class="container mx-auto px-6 py-16">
-            <div class="grid md:grid-cols-4 gap-8 lg:gap-12">
-                
-                <!-- Company Info -->
-                <div class="md:col-span-1">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center mr-3">
-                            🚗
-                        </div>
-                        <h3 class="text-2xl font-bold"><?php bloginfo('name'); ?></h3>
-                    </div>
-                    <p class="text-gray-300 mb-6 leading-relaxed">
-                        Service professionnel d'enlèvement d'épaves gratuit et agréé VHU en Île-de-France. Intervention rapide 7j/7.
-                    </p>
-                    <div class="flex items-center space-x-4">
-                        <a href="tel:0624930536" class="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            📞 06 24 93 05 36
-                        </a>
-                    </div>
-                </div>
+	<footer class="site-footer" style="background: linear-gradient(135deg, var(--gray-800), var(--gray-900)); color: white; padding: 4rem 0 2rem;">
+		<div class="container">
+			<!-- Main Footer Content -->
+			<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+				
+				<!-- Company Info -->
+				<div>
+					<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+						<div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-yellow), var(--primary-yellow-dark)); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="var(--gray-900)">
+								<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+							</svg>
+						</div>
+						<div>
+							<h3 style="color: white; margin: 0; font-size: 1.5rem; font-weight: 700;">Speed Épaviste</h3>
+							<p style="color: var(--primary-yellow); margin: 0; font-size: 0.875rem; font-weight: 500;">Épaviste Agréé VHU</p>
+						</div>
+					</div>
+					<p style="color: #D1D5DB; line-height: 1.6; margin-bottom: 1.5rem;">
+						Votre spécialiste de l'enlèvement d'épave gratuit en Île-de-France. Service professionnel agréé VHU avec certificat de destruction officiel.
+					</p>
+					<div style="display: flex; gap: 1rem;">
+						<a href="tel:0624930536" style="background: var(--accent-red); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: var(--transition-normal);">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+							</svg>
+							Appel Gratuit
+						</a>
+					</div>
+				</div>
 
-                <!-- Navigation Links -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-6 flex items-center">
-                        <span class="w-2 h-6 bg-yellow-400 rounded-full mr-3"></span>
-                        Navigation
-                    </h4>
-                    <ul class="space-y-3">
-                        <li><a href="<?php echo home_url('/'); ?>" class="text-gray-300 hover:text-yellow-400 transition-colors duration-200 flex items-center group">
-                            <span class="w-0 group-hover:w-2 h-2 bg-yellow-400 rounded-full mr-0 group-hover:mr-2 transition-all duration-200"></span>
-                            Accueil
-                        </a></li>
-                        <li><a href="<?php echo home_url('/about'); ?>" class="text-gray-300 hover:text-yellow-400 transition-colors duration-200 flex items-center group">
-                            <span class="w-0 group-hover:w-2 h-2 bg-yellow-400 rounded-full mr-0 group-hover:mr-2 transition-all duration-200"></span>
-                            À propos
-                        </a></li>
-                        <li><a href="<?php echo home_url('/faq'); ?>" class="text-gray-300 hover:text-yellow-400 transition-colors duration-200 flex items-center group">
-                            <span class="w-0 group-hover:w-2 h-2 bg-yellow-400 rounded-full mr-0 group-hover:mr-2 transition-all duration-200"></span>
-                            FAQ
-                        </a></li>
-                        <li><a href="<?php echo home_url('/contact'); ?>" class="text-gray-300 hover:text-yellow-400 transition-colors duration-200 flex items-center group">
-                            <span class="w-0 group-hover:w-2 h-2 bg-yellow-400 rounded-full mr-0 group-hover:mr-2 transition-all duration-200"></span>
-                            Contact
-                        </a></li>
-                    </ul>
-                </div>
+				<!-- Services -->
+				<div>
+					<h4 style="color: var(--primary-yellow); font-size: 1.125rem; font-weight: 600; margin-bottom: 1.5rem;">Nos Services</h4>
+					<ul style="list-style: none; padding: 0; margin: 0; space-y: 0.75rem;">
+						<li style="margin-bottom: 0.75rem;">
+							<a href="#" style="color: #D1D5DB; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: var(--transition-fast);">
+								<span style="color: var(--primary-yellow);">→</span>
+								Enlèvement d'épave gratuit
+							</a>
+						</li>
+						<li style="margin-bottom: 0.75rem;">
+							<a href="#" style="color: #D1D5DB; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: var(--transition-fast);">
+								<span style="color: var(--primary-yellow);">→</span>
+								Certificat de destruction VHU
+							</a>
+						</li>
+						<li style="margin-bottom: 0.75rem;">
+							<a href="#" style="color: #D1D5DB; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: var(--transition-fast);">
+								<span style="color: var(--primary-yellow);">→</span>
+								Démarches administratives
+							</a>
+						</li>
+						<li style="margin-bottom: 0.75rem;">
+							<a href="#" style="color: #D1D5DB; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: var(--transition-fast);">
+								<span style="color: var(--primary-yellow);">→</span>
+								Recyclage écologique
+							</a>
+						</li>
+						<li style="margin-bottom: 0.75rem;">
+							<a href="#" style="color: #D1D5DB; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: var(--transition-fast);">
+								<span style="color: var(--primary-yellow);">→</span>
+								Service d'urgence 7j/7
+							</a>
+						</li>
+					</ul>
+				</div>
 
-                <!-- Services -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-6 flex items-center">
-                        <span class="w-2 h-6 bg-yellow-400 rounded-full mr-3"></span>
-                        Nos Services
-                    </h4>
-                    <ul class="space-y-3 text-gray-300">
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
-                            Enlèvement gratuit d'épaves
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-green-400 rounded-full mr-3"></span>
-                            Certificat de destruction VHU
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
-                            Démarches administratives
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
-                            Recyclage écologique
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-red-400 rounded-full mr-3"></span>
-                            Intervention 7j/7
-                        </li>
-                    </ul>
-                </div>
+				<!-- Navigation -->
+				<div>
+					<h4 style="color: var(--primary-yellow); font-size: 1.125rem; font-weight: 600; margin-bottom: 1.5rem;">Navigation</h4>
+					<ul style="list-style: none; padding: 0; margin: 0;">
+						<li style="margin-bottom: 0.75rem;">
+							<a href="<?php echo home_url('/'); ?>" style="color: #D1D5DB; text-decoration: none; transition: var(--transition-fast);">Accueil</a>
+						</li>
+						<li style="margin-bottom: 0.75rem;">
+							<a href="<?php echo home_url('/about'); ?>" style="color: #D1D5DB; text-decoration: none; transition: var(--transition-fast);">À propos</a>
+						</li>
+						<li style="margin-bottom: 0.75rem;">
+							<a href="<?php echo home_url('/faq'); ?>" style="color: #D1D5DB; text-decoration: none; transition: var(--transition-fast);">FAQ</a>
+						</li>
+						<li style="margin-bottom: 0.75rem;">
+							<a href="<?php echo home_url('/contact'); ?>" style="color: #D1D5DB; text-decoration: none; transition: var(--transition-fast);">Contact</a>
+						</li>
+					</ul>
+				</div>
 
-                <!-- Zone d'intervention -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-6 flex items-center">
-                        <span class="w-2 h-6 bg-yellow-400 rounded-full mr-3"></span>
-                        Zone d'intervention
-                    </h4>
-                    <p class="text-yellow-400 font-semibold mb-4">Île-de-France</p>
-                    <div class="grid grid-cols-2 gap-2 text-sm text-gray-400">
-                        <div class="flex items-center">
-                            <span class="w-1 h-1 bg-yellow-400 rounded-full mr-2"></span>
-                            Paris (75)
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-1 h-1 bg-yellow-400 rounded-full mr-2"></span>
-                            Seine-et-Marne (77)
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-1 h-1 bg-yellow-400 rounded-full mr-2"></span>
-                            Yvelines (78)
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-1 h-1 bg-yellow-400 rounded-full mr-2"></span>
-                            Essonne (91)
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-1 h-1 bg-yellow-400 rounded-full mr-2"></span>
-                            Hauts-de-Seine (92)
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-1 h-1 bg-yellow-400 rounded-full mr-2"></span>
-                            Seine-Saint-Denis (93)
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-1 h-1 bg-yellow-400 rounded-full mr-2"></span>
-                            Val-de-Marne (94)
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-1 h-1 bg-yellow-400 rounded-full mr-2"></span>
-                            Val-d'Oise (95)
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+				<!-- Contact Info -->
+				<div>
+					<h4 style="color: var(--primary-yellow); font-size: 1.125rem; font-weight: 600; margin-bottom: 1.5rem;">Contact</h4>
+					<div style="space-y: 1rem;">
+						<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+							<div style="width: 40px; height: 40px; background: var(--primary-yellow); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray-900)">
+									<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+								</svg>
+							</div>
+							<div>
+								<p style="color: #D1D5DB; margin: 0; font-weight: 600;">06 24 93 05 36</p>
+								<p style="color: #9CA3AF; margin: 0; font-size: 0.875rem;">24h/24 - 7j/7</p>
+							</div>
+						</div>
+						
+						<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+							<div style="width: 40px; height: 40px; background: var(--primary-yellow); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray-900)">
+									<path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+									<path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+								</svg>
+							</div>
+							<div>
+								<p style="color: #D1D5DB; margin: 0; font-weight: 600;">Île-de-France</p>
+								<p style="color: #9CA3AF; margin: 0; font-size: 0.875rem;">75, 77, 78, 91, 92, 93, 94, 95</p>
+							</div>
+						</div>
+						
+						<div style="background: rgba(255, 193, 7, 0.1); border: 1px solid var(--primary-yellow); border-radius: 8px; padding: 1rem; margin-top: 1.5rem;">
+							<p style="color: var(--primary-yellow); margin: 0; font-weight: 600; font-size: 0.875rem;">🏆 Épaviste Agréé VHU</p>
+							<p style="color: #D1D5DB; margin: 0; font-size: 0.875rem;">Certification officielle pour le traitement des véhicules hors d'usage</p>
+						</div>
+					</div>
+				</div>
+			</div>
 
-        <!-- Testimonials Section -->
-        <div class="border-t border-gray-700 py-12">
-            <div class="container mx-auto px-6">
-                <h4 class="text-center text-xl font-bold mb-8 flex items-center justify-center">
-                    <span class="text-yellow-400 mr-2">⭐</span>
-                    Avis clients
-                    <span class="text-yellow-400 ml-2">⭐</span>
-                </h4>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 hover:border-yellow-400 transition-all duration-300">
-                        <div class="flex items-center mb-4">
-                            <div class="flex text-yellow-400">
-                                ⭐⭐⭐⭐⭐
-                            </div>
-                        </div>
-                        <p class="text-gray-300 italic mb-4">"Service impeccable ! Mon épave a été enlevée rapidement et gratuitement. Je recommande vivement."</p>
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center mr-3">
-                                <span class="text-black font-bold">JM</span>
-                            </div>
-                            <span class="font-semibold">Jean M.</span>
-                        </div>
-                    </div>
-                    <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 hover:border-yellow-400 transition-all duration-300">
-                        <div class="flex items-center mb-4">
-                            <div class="flex text-yellow-400">
-                                ⭐⭐⭐⭐⭐
-                            </div>
-                        </div>
-                        <p class="text-gray-300 italic mb-4">"Équipe très professionnelle et sympathique. Toutes les démarches ont été prises en charge."</p>
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center mr-3">
-                                <span class="text-black font-bold">FD</span>
-                            </div>
-                            <span class="font-semibold">Fatou D.</span>
-                        </div>
-                    </div>
-                    <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 hover:border-yellow-400 transition-all duration-300">
-                        <div class="flex items-center mb-4">
-                            <div class="flex text-yellow-400">
-                                ⭐⭐⭐⭐⭐
-                            </div>
-                        </div>
-                        <p class="text-gray-300 italic mb-4">"Intervention très rapide, service gratuit comme promis. Parfait !"</p>
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center mr-3">
-                                <span class="text-black font-bold">PR</span>
-                            </div>
-                            <span class="font-semibold">Paul R.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+			<!-- Bottom Footer -->
+			<div style="border-top: 1px solid #374151; padding-top: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+				<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+					<p style="color: #9CA3AF; margin: 0; font-size: 0.875rem;">
+						© <?php echo date('Y'); ?> Speed Épaviste. Tous droits réservés. | Service d'épaviste agréé en Île-de-France
+					</p>
+					<div style="display: flex; gap: 1.5rem;">
+						<a href="#" style="color: #9CA3AF; text-decoration: none; font-size: 0.875rem; transition: var(--transition-fast);">Mentions légales</a>
+						<a href="#" style="color: #9CA3AF; text-decoration: none; font-size: 0.875rem; transition: var(--transition-fast);">Confidentialité</a>
+						<a href="#" style="color: #9CA3AF; text-decoration: none; font-size: 0.875rem; transition: var(--transition-fast);">CGU</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <!-- Footer Bottom -->
-        <div class="border-t border-gray-700 py-8">
-            <div class="container mx-auto px-6">
-                <div class="flex flex-col md:flex-row items-center justify-between">
-                    <div class="flex items-center mb-4 md:mb-0">
-                        <span class="text-gray-400">&copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>.</span>
-                        <span class="text-gray-400 ml-1">Tous droits réservés.</span>
-                    </div>
-                    <div class="flex items-center space-x-6">
-                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors duration-200 text-sm underline-offset-2 hover:underline">Mentions légales</a>
-                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors duration-200 text-sm underline-offset-2 hover:underline">Politique de confidentialité</a>
-                        <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors duration-200 text-sm underline-offset-2 hover:underline">CGU</a>
-                    </div>
-                </div>
-                <div class="text-center mt-4">
-                    <p class="text-sm text-gray-400">Enlèvement d'épaves gratuit - Service professionnel agréé VHU</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+		<!-- Back to top button -->
+		<button id="back-to-top" style="position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-yellow), var(--primary-yellow-dark)); color: var(--gray-900); border: none; border-radius: 50%; cursor: pointer; box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden; transition: all var(--transition-normal); z-index: 1000;" aria-label="Retour en haut">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+				<path d="M7 14l5-5 5 5z"/>
+			</svg>
+		</button>
+	</footer>
 
-<!-- Back to top button -->
-<button id="back-to-top" class="fixed bottom-6 right-6 bg-yellow-400 hover:bg-yellow-500 text-black p-3 rounded-full shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-    </svg>
-</button>
+	<script>
+	// Back to top functionality
+	const backToTopButton = document.getElementById('back-to-top');
+	
+	window.addEventListener('scroll', function() {
+		if (window.pageYOffset > 300) {
+			backToTopButton.style.opacity = '1';
+			backToTopButton.style.visibility = 'visible';
+		} else {
+			backToTopButton.style.opacity = '0';
+			backToTopButton.style.visibility = 'hidden';
+		}
+	});
+	
+	backToTopButton.addEventListener('click', function() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
+	});
 
-<script>
-// Back to top functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const backToTopButton = document.getElementById('back-to-top');
-    
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            backToTopButton.classList.remove('translate-y-20', 'opacity-0');
-            backToTopButton.classList.add('translate-y-0', 'opacity-100');
-        } else {
-            backToTopButton.classList.add('translate-y-20', 'opacity-0');
-            backToTopButton.classList.remove('translate-y-0', 'opacity-100');
-        }
-    });
-    
-    backToTopButton.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-});
-</script>
+	// Enhanced link hover effects
+	document.querySelectorAll('footer a').forEach(link => {
+		link.addEventListener('mouseenter', function() {
+			if (this.style.color === 'rgb(209, 213, 219)' || this.style.color === '#D1D5DB') {
+				this.style.color = 'var(--primary-yellow)';
+			}
+		});
+		
+		link.addEventListener('mouseleave', function() {
+			if (!this.closest('.cta-link')) {
+				this.style.color = '#D1D5DB';
+			}
+		});
+	});
 
-</div>
+	// Performance optimization for scroll events
+	let ticking = false;
+	function updateBackToTop() {
+		if (window.pageYOffset > 300) {
+			backToTopButton.style.opacity = '1';
+			backToTopButton.style.visibility = 'visible';
+		} else {
+			backToTopButton.style.opacity = '0';
+			backToTopButton.style.visibility = 'hidden';
+		}
+		ticking = false;
+	}
+
+	window.addEventListener('scroll', function() {
+		if (!ticking) {
+			requestAnimationFrame(updateBackToTop);
+			ticking = true;
+		}
+	});
+	</script>
 
 <?php wp_footer(); ?>
 

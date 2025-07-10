@@ -40,7 +40,8 @@ function speed_epaviste_enqueue_assets() {
         'speed-epaviste-components' => 'css/components.css',
         'speed-epaviste-front-page' => 'css/front-page.css',
         'speed-epaviste-responsive' => 'css/responsive.css',
-        'speed-epaviste-animations' => 'css/animations.css'
+        'speed-epaviste-animations' => 'css/animations.css',
+        'speed-epaviste-theme' => 'css/epaviste-theme.css'
     );
     
     foreach ($css_files as $handle => $file_path) {

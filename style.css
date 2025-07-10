@@ -1,22 +1,118 @@
 
 /*
-Theme Name: Speed Épaviste
-Description: WordPress theme optimized for 100% SEO and PageSpeed scores
-Version: 3.1
+Theme Name: Speed Épaviste Pro
+Description: Professional WordPress theme for épaviste services - Optimized for performance and SEO
+Version: 4.0
+Author: Speed Épaviste
 */
 
-/* Critical Base Styles */
-* {
+/* Modern CSS Reset & Base Styles */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Yellow-based color palette */
+  --primary-yellow: #FFC107;
+  --primary-yellow-dark: #FF8F00;
+  --primary-yellow-light: #FFF350;
+  --accent-orange: #FF9800;
+  --accent-red: #F44336;
+  
+  /* Neutral colors */
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-600: #4B5563;
+  --gray-700: #374151;
+  --gray-800: #1F2937;
+  --gray-900: #111827;
+  
+  /* Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Inter', system-ui, sans-serif;
+  
+  /* Spacing */
+  --container-max-width: 1200px;
+  --section-padding: 4rem 0;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f9fafb;
+  font-family: var(--font-primary);
   line-height: 1.6;
-  color: #374151;
+  color: var(--gray-700);
+  background-color: var(--gray-50);
+  overflow-x: hidden;
+}
+
+/* Core Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--gray-900);
+  margin-bottom: 1rem;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h4 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
+
+p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+a {
+  color: var(--primary-yellow-dark);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary-yellow);
+}
+
+/* Layout Components */
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+.section {
+  padding: var(--section-padding);
 }
 
 /* Import modular CSS files */
@@ -25,6 +121,7 @@ body {
 @import url('css/components.css');
 @import url('css/responsive.css');
 @import url('css/animations.css');
+@import url('css/epaviste-theme.css');
 
 /* WordPress Specific Styles */
 .speed-epaviste-theme {

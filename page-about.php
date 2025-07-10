@@ -2,19 +2,29 @@
 <?php
 /**
  * Template Name: About Page
+ * Speed Épaviste Pro - À propos
  */
 get_header();
 ?>
 
 <main id="primary" class="site-main">
-  <div class="hero-section bg-gradient-to-r from-yellow-400 to-yellow-600 py-16 px-6">
-    <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
-        À propos de Speed Épaviste
-      </h1>
-      <p class="text-xl text-white/90">
-        Votre spécialiste de l'enlèvement d'épaves en Île-de-France
-      </p>
+  <div class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          À propos de <strong>Speed Épaviste</strong>
+        </h1>
+        <p class="hero-subtitle">
+          Votre partenaire de confiance pour l'enlèvement d'épaves gratuit en Île-de-France depuis plus de 10 ans
+        </p>
+      </div>
+    </div>
+    
+    <!-- Wave separator -->
+    <div style="position: absolute; bottom: 0; left: 0; right: 0;">
+      <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <path d="M0 120H1440V0C1320 40 1080 80 720 80C360 80 120 40 0 0V120Z" fill="white" />
+      </svg>
     </div>
   </div>
 
