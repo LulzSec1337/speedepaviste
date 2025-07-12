@@ -19,11 +19,11 @@ get_header();
                     Service d'épaviste agréé VHU • Intervention 7j/7 • Certificat de destruction offert • Démarches administratives incluses
                 </p>
                 <div class="hero-cta">
-                    <a href="tel:0624930536" class="btn btn-call btn-large">
+                    <a href="tel:0607380194" class="btn btn-call btn-large">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                         </svg>
-                        Appeler Maintenant - 06 24 93 05 36
+                        Appeler Maintenant - 06 07 38 01 94
                     </a>
                     <a href="#contact" class="btn btn-secondary btn-large">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -103,7 +103,7 @@ get_header();
                 <div class="process-step">
                     <div class="process-number">1</div>
                     <h3>Contactez-nous</h3>
-                    <p>Appelez-nous au 06 24 93 05 36 ou remplissez notre formulaire en ligne avec les détails de votre véhicule</p>
+                    <p>Appelez-nous au 06 07 38 01 94 ou remplissez notre formulaire en ligne avec les détails de votre véhicule</p>
                 </div>
                 
                 <div class="process-step">
@@ -189,6 +189,192 @@ get_header();
         </div>
     </section>
 
+    <!-- Zones Section -->
+    <section class="zones-section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="color: var(--gray-900); margin-bottom: 1rem;">Zones d'Intervention en Île-de-France</h2>
+                <p style="font-size: 1.125rem; color: var(--gray-600);">
+                    Service d'épaviste disponible dans tous les départements franciliens
+                </p>
+            </div>
+            
+            <div class="zones-grid">
+                <div class="zone-card">
+                    <div class="zone-number">75</div>
+                    <h3>Paris</h3>
+                    <p>Intervention dans tous les arrondissements de Paris, enlèvement rapide et certificat VHU</p>
+                </div>
+                
+                <div class="zone-card">
+                    <div class="zone-number">77</div>
+                    <h3>Seine-et-Marne</h3>
+                    <p>Meaux, Melun, Fontainebleau et toutes les communes du département</p>
+                </div>
+                
+                <div class="zone-card">
+                    <div class="zone-number">78</div>
+                    <h3>Yvelines</h3>
+                    <p>Versailles, Saint-Germain-en-Laye, Poissy et environs</p>
+                </div>
+                
+                <div class="zone-card">
+                    <div class="zone-number">91</div>
+                    <h3>Essonne</h3>
+                    <p>Évry, Palaiseau, Corbeil-Essonnes et toute la région sud</p>
+                </div>
+                
+                <div class="zone-card">
+                    <div class="zone-number">92</div>
+                    <h3>Hauts-de-Seine</h3>
+                    <p>Nanterre, Boulogne, Courbevoie et la petite couronne ouest</p>
+                </div>
+                
+                <div class="zone-card">
+                    <div class="zone-number">93</div>
+                    <h3>Seine-Saint-Denis</h3>
+                    <p>Saint-Denis, Montreuil, Aubervilliers et le nord-est</p>
+                </div>
+                
+                <div class="zone-card">
+                    <div class="zone-number">94</div>
+                    <h3>Val-de-Marne</h3>
+                    <p>Créteil, Vincennes, Vitry-sur-Seine et le sud-est</p>
+                </div>
+                
+                <div class="zone-card">
+                    <div class="zone-number">95</div>
+                    <h3>Val-d'Oise</h3>
+                    <p>Pontoise, Argenteuil, Sarcelles et tout le nord</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Épaves Récupérées</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Départements Couverts</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24h</div>
+                    <div class="stat-label">Intervention Rapide</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Satisfaction Client</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="color: var(--gray-900); margin-bottom: 1rem;">Témoignages Clients</h2>
+                <p style="font-size: 1.125rem; color: var(--gray-600);">
+                    L'expérience de nos clients avec notre service d'épaviste agréé
+                </p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Service rapide et professionnel. Mon épave a été enlevée le lendemain de mon appel. Merci !"</p>
+                    <div class="testimonial-author">- Marie D., Paris 11ème</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Excellent service, gratuit comme promis. Le certificat de destruction a été envoyé rapidement."</p>
+                    <div class="testimonial-author">- Pierre L., Créteil</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Très satisfait de Speed Épaviste. L'équipe est ponctuelle et ils gèrent toutes les démarches."</p>
+                    <div class="testimonial-author">- Sophie M., Versailles</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="color: var(--gray-900); margin-bottom: 1rem;">Questions Fréquentes</h2>
+                <p style="font-size: 1.125rem; color: var(--gray-600);">
+                    Retrouvez les réponses aux questions les plus courantes sur notre service d'épaviste
+                </p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Le service est-il vraiment gratuit ?
+                        <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Oui, notre service d'enlèvement d'épave est 100% gratuit. Aucun frais n'est facturé pour l'enlèvement, le transport, le certificat de destruction ou les démarches administratives. Nous sommes rémunérés par la revente des matériaux recyclables.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Quels documents faut-il fournir ?
+                        <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Vous devez fournir la carte grise du véhicule et une pièce d'identité. Si vous n'êtes pas le propriétaire, une procuration signée du propriétaire sera nécessaire. Nous nous occupons de toutes les autres formalités.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Dans quel état doit être le véhicule ?
+                        <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Nous acceptons tous types de véhicules : en panne, accidentés, sans moteur, rouillés... L'état du véhicule n'importe pas. Même s'il ne roule plus ou s'il lui manque des pièces, nous pouvons l'enlever.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Combien de temps pour obtenir le certificat ?
+                        <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer" style="display: none;">
+                        <p>Le certificat de destruction VHU vous est remis le jour de l'enlèvement ou envoyé par courrier dans les 7 jours. Ce document officiel est indispensable pour les démarches auprès de la préfecture et de votre assurance.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="<?php echo home_url('/faq'); ?>" class="btn btn-secondary">
+                    Voir toutes les FAQ
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
         <div class="container">
@@ -248,7 +434,7 @@ get_header();
                         <div>
                             <h4 style="font-weight: 600; color: var(--gray-900); margin-bottom: 0.5rem;">Téléphone</h4>
                             <p style="color: var(--gray-600); margin: 0;">
-                                <a href="tel:0624930536" style="color: var(--primary-yellow-dark); font-weight: 600;">06 24 93 05 36</a>
+                                <a href="tel:0607380194" style="color: var(--primary-yellow-dark); font-weight: 600;">06 07 38 01 94</a>
                             </p>
                             <p style="color: var(--gray-500); font-size: 0.875rem; margin: 0;">Disponible 7j/7 - 24h/24</p>
                         </div>
@@ -298,6 +484,30 @@ get_header();
 </main>
 
 <script>
+// FAQ Toggle functionality
+function toggleFAQ(button) {
+    const faqItem = button.parentElement;
+    const answer = faqItem.querySelector('.faq-answer');
+    const icon = button.querySelector('.faq-icon');
+    
+    // Close all other FAQ items
+    document.querySelectorAll('.faq-item').forEach(item => {
+        if (item !== faqItem) {
+            item.classList.remove('active');
+            item.querySelector('.faq-answer').style.display = 'none';
+        }
+    });
+    
+    // Toggle current FAQ item
+    if (faqItem.classList.contains('active')) {
+        faqItem.classList.remove('active');
+        answer.style.display = 'none';
+    } else {
+        faqItem.classList.add('active');
+        answer.style.display = 'block';
+    }
+}
+
 // Enhanced contact form with validation
 document.getElementById('epaviste-contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -345,6 +555,39 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }
     });
+});
+
+// Back to top button functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const backToTopButton = document.getElementById('back-to-top');
+    
+    function updateBackToTop() {
+        if (window.pageYOffset > 300) {
+            backToTopButton.style.opacity = '1';
+            backToTopButton.style.visibility = 'visible';
+        } else {
+            backToTopButton.style.opacity = '0';
+            backToTopButton.style.visibility = 'hidden';
+        }
+    }
+
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(updateBackToTop);
+            ticking = true;
+        }
+        ticking = false;
+    });
+
+    if (backToTopButton) {
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 });
 </script>
 
