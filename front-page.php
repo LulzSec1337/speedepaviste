@@ -9,27 +9,28 @@ get_header();
 <main id="primary" class="site-main" role="main">
     
     <!-- Hero Section -->
-    <section class="hero-section" aria-label="Service d'enlèvement d'épave gratuit en Île-de-France">
+    <section class="hero-section-new" aria-label="Service d'enlèvement d'épave gratuit en Île-de-France">
         <div class="container">
-            <div class="hero-content animate-slide-up">
-                <h1 class="hero-title">
-                    Enlèvement d'épave <strong>100% GRATUIT</strong> en Île-de-France
+            <div class="hero-content-new animate-slide-up">
+                <h1 class="hero-main-title">
+                    Services Épaviste Agréé VHU en France - Enlèvement d'Épave Gratuit
                 </h1>
-                <p class="hero-subtitle">
-                    Service d'épaviste agréé VHU • Intervention 7j/7 • Certificat de destruction offert • Démarches administratives incluses
-                </p>
-                <div class="hero-cta">
-                    <a href="tel:0607380194" class="btn btn-call btn-large">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                        </svg>
-                        Appeler Maintenant - 06 07 38 01 94
-                    </a>
-                    <a href="#contact" class="btn btn-secondary btn-large">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                        Demander un Devis Gratuit
+                <div class="hero-description">
+                    <p class="hero-intro">Speed Épaviste, expert agréé VHU depuis 2015, propose une <strong class="text-highlight">couverture nationale en France pour l'enlèvement, le rachat et la destruction écologique de vos véhicules hors d'usage</strong> dans tous les départements d'Île-de-France.</p>
+                    
+                    <ul class="hero-features">
+                        <li><strong>Service Gratuit</strong> - enlèvement d'épave gratuit par épaviste agréé en France</li>
+                        <li><strong>Intervention 7j/7</strong> - dans toute la France avec dépanneurs professionnels certifiés</li>
+                        <li><strong>Meilleur Prix</strong> - rachat de véhicule accidenté et épave au meilleur prix</li>
+                        <li><strong>Éco-responsable</strong> - centre VHU agréé pour destruction écologique</li>
+                        <li><strong>Démarches administratives incluses</strong> - certificat de destruction officiel</li>
+                        <li><strong>Compatible prime à la conversion</strong> - estimation gratuite en ligne</li>
+                    </ul>
+                </div>
+                
+                <div class="hero-cta-new">
+                    <a href="tel:0607380194" class="btn-hero-call">
+                        📞 06 07 38 01 94
                     </a>
                 </div>
             </div>

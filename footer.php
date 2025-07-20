@@ -5,137 +5,115 @@
  */
 ?>
 
-	<footer class="site-footer" style="background: linear-gradient(135deg, var(--gray-800), var(--gray-900)); color: white; padding: 4rem 0 2rem;">
-		<div class="container">
+	<footer class="site-footer-new">
+		<div class="footer-container-new">
 			<!-- Main Footer Content -->
-			<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
-				
-				<!-- Company Info -->
-				<div>
-					<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-						<div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-yellow), var(--primary-yellow-dark)); border-radius: 12px; display: flex; align-items: center; justify-content: center; animation: pulse 2s infinite;">
-							<svg width="24" height="24" viewBox="0 0 24 24" fill="var(--gray-900)">
-								<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-							</svg>
+			<div class="footer-main-new">
+				<div class="footer-grid-new">
+					<!-- Speed Épaviste -->
+					<div class="footer-column-new">
+						<div class="footer-logo-new">
+							<div class="footer-icon-new">🏠</div>
+							<div>
+								<h3 class="footer-company-title">Speed Épaviste</h3>
+								<p class="footer-company-subtitle">Agréé VHU</p>
+							</div>
 						</div>
-						<div>
-							<h3 style="color: white; margin: 0; font-size: 1.5rem; font-weight: 700;">Speed Épaviste</h3>
-							<p style="color: var(--primary-yellow); margin: 0; font-size: 0.875rem; font-weight: 500;">🏆 Épaviste Agréé VHU - Certifié État</p>
-						</div>
-					</div>
-					<p style="color: #D1D5DB; line-height: 1.6; margin-bottom: 1.5rem; text-align: justify;">
-						<strong>Speed Épaviste</strong> est votre partenaire de confiance pour l'<strong>enlèvement gratuit d'épaves automobiles</strong> dans toute l'Île-de-France. Agréés par l'État pour le traitement des <strong>Véhicules Hors d'Usage (VHU)</strong>, nous garantissons un service professionnel conforme à la réglementation française. Notre équipe d'<strong>épavistes certifiés</strong> intervient rapidement dans les 8 départements franciliens pour vous débarrasser de votre véhicule en panne, accidenté ou simplement inutilisable, tout en respectant l'environnement grâce à notre processus de <strong>recyclage écologique</strong> dans des centres agréés.
-					</p>
-					<div style="background: rgba(255, 193, 7, 0.1); border-left: 4px solid var(--primary-yellow); padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;">
-						<h4 style="color: var(--primary-yellow); margin: 0 0 0.5rem 0; font-size: 0.875rem; font-weight: 600;">🌱 Engagement Écologique</h4>
-						<p style="color: #D1D5DB; margin: 0; font-size: 0.875rem; line-height: 1.4;">
-							Plus de <strong>95% de recyclage</strong> • Dépollution conforme • Traitement responsable des fluides automobiles
+						
+						<p class="footer-description">
+							Service professionnel d'<strong>enlèvement d'épave gratuit</strong> agréé VHU en Île-de-France. 
+							Intervention express 7j/7 avec certificat de destruction immédiat et recyclage écologique 95%.
 						</p>
-					</div>
-					<div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-						<a href="tel:0607380194" style="background: linear-gradient(135deg, var(--accent-red), #dc2626); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3); animation: glow 2s ease-in-out infinite alternate;">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-								<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-							</svg>
-							📞 Appel Gratuit
-						</a>
-						<a href="#contact" style="background: linear-gradient(135deg, var(--primary-yellow), var(--primary-yellow-dark)); color: var(--gray-900); padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-								<path d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-							</svg>
-							✉️ Devis Gratuit
-						</a>
-					</div>
-				</div>
-
-				<!-- Services -->
-				<div>
-					<h4 style="color: var(--primary-yellow); font-size: 1.125rem; font-weight: 600; margin-bottom: 1.5rem;">Nos Services</h4>
-					<ul style="list-style: none; padding: 0; margin: 0; space-y: 0.75rem;">
-						<li style="margin-bottom: 0.75rem;">
-							<a href="#" style="color: #D1D5DB; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: var(--transition-fast);">
-								<span style="color: var(--primary-yellow);">→</span>
-								Enlèvement d'épave gratuit
-							</a>
-						</li>
-						<li style="margin-bottom: 0.75rem;">
-							<a href="#" style="color: #D1D5DB; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: var(--transition-fast);">
-								<span style="color: var(--primary-yellow);">→</span>
-								Certificat de destruction VHU
-							</a>
-						</li>
-						<li style="margin-bottom: 0.75rem;">
-							<a href="#" style="color: #D1D5DB; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: var(--transition-fast);">
-								<span style="color: var(--primary-yellow);">→</span>
-								Démarches administratives
-							</a>
-						</li>
-						<li style="margin-bottom: 0.75rem;">
-							<a href="#" style="color: #D1D5DB; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: var(--transition-fast);">
-								<span style="color: var(--primary-yellow);">→</span>
-								Recyclage écologique
-							</a>
-						</li>
-						<li style="margin-bottom: 0.75rem;">
-							<a href="#" style="color: #D1D5DB; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: var(--transition-fast);">
-								<span style="color: var(--primary-yellow);">→</span>
-								Service d'urgence 7j/7
-							</a>
-						</li>
-					</ul>
-				</div>
-
-				<!-- Navigation -->
-				<div>
-					<h4 style="color: var(--primary-yellow); font-size: 1.125rem; font-weight: 600; margin-bottom: 1.5rem;">Navigation</h4>
-					<ul style="list-style: none; padding: 0; margin: 0;">
-						<li style="margin-bottom: 0.75rem;">
-							<a href="<?php echo home_url('/'); ?>" style="color: #D1D5DB; text-decoration: none; transition: var(--transition-fast);">Accueil</a>
-						</li>
-						<li style="margin-bottom: 0.75rem;">
-							<a href="<?php echo home_url('/about'); ?>" style="color: #D1D5DB; text-decoration: none; transition: var(--transition-fast);">À propos</a>
-						</li>
-						<li style="margin-bottom: 0.75rem;">
-							<a href="<?php echo home_url('/faq'); ?>" style="color: #D1D5DB; text-decoration: none; transition: var(--transition-fast);">FAQ</a>
-						</li>
-						<li style="margin-bottom: 0.75rem;">
-							<a href="<?php echo home_url('/contact'); ?>" style="color: #D1D5DB; text-decoration: none; transition: var(--transition-fast);">Contact</a>
-						</li>
-					</ul>
-				</div>
-
-				<!-- Contact Info -->
-				<div>
-					<h4 style="color: var(--primary-yellow); font-size: 1.125rem; font-weight: 600; margin-bottom: 1.5rem;">Contact</h4>
-					<div style="space-y: 1rem;">
-						<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-							<div style="width: 40px; height: 40px; background: var(--primary-yellow); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray-900)">
-									<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+						
+						<div class="footer-social-new">
+							<a href="#" class="social-link-new" aria-label="Facebook">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
 								</svg>
-							</div>
-							<div>
-								<p style="color: #D1D5DB; margin: 0; font-weight: 600;">06 07 38 01 94</p>
-								<p style="color: #9CA3AF; margin: 0; font-size: 0.875rem;">24h/24 - 7j/7</p>
-							</div>
+							</a>
+							<a href="#" class="social-link-new" aria-label="LinkedIn">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+								</svg>
+							</a>
+							<a href="#" class="social-link-new" aria-label="Google">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+								</svg>
+							</a>
+						</div>
+					</div>
+					
+					<!-- Services Épaviste VHU -->
+					<div class="footer-column-new">
+						<div class="footer-header-new">
+							<span class="footer-icon-new">💡</span>
+							<h3 class="footer-title-new">Services Épaviste VHU</h3>
+						</div>
+						<ul class="footer-links-new">
+							<li><a href="#" class="footer-link-new">Enlèvement épave gratuit express</a></li>
+							<li><a href="#" class="footer-link-new">Destruction véhicule VHU certifiée</a></li>
+							<li><a href="#" class="footer-link-new">Certificat destruction immédiat</a></li>
+							<li><a href="#" class="footer-link-new">Recyclage écologique 95%</a></li>
+							<li><a href="#" class="footer-link-new">Remorquage épave professionnel</a></li>
+							<li><a href="#" class="footer-link-new">Démarches administratives</a></li>
+							<li><a href="#" class="footer-link-new">Épaviste agréé 7j/7</a></li>
+							<li><a href="#" class="footer-link-new">Enlèvement sans carte grise</a></li>
+						</ul>
+					</div>
+					
+					<!-- Zones d'Intervention Épaviste -->
+					<div class="footer-column-new">
+						<div class="footer-header-new">
+							<span class="footer-icon-new">📍</span>
+							<h3 class="footer-title-new">Zones d'Intervention Épaviste</h3>
+						</div>
+						<ul class="footer-links-new zones-links">
+							<li><a href="#" class="footer-link-new">Paris (75) - Enlèvement express</a></li>
+							<li><a href="#" class="footer-link-new">Hauts-de-Seine (92)</a></li>
+							<li><a href="#" class="footer-link-new">Seine-Saint-Denis (93)</a></li>
+							<li><a href="#" class="footer-link-new">Val-de-Marne (94)</a></li>
+							<li><a href="#" class="footer-link-new">Seine-et-Marne (77)</a></li>
+							<li><a href="#" class="footer-link-new">Yvelines (78)</a></li>
+							<li><a href="#" class="footer-link-new">Essonne (91)</a></li>
+							<li><a href="#" class="footer-link-new">Val-d'Oise (95)</a></li>
+						</ul>
+					</div>
+					
+					<!-- Contact Express -->
+					<div class="footer-column-new">
+						<div class="footer-header-new">
+							<span class="footer-icon-new">📞</span>
+							<h3 class="footer-title-new">Contact Express</h3>
 						</div>
 						
-						<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-							<div style="width: 40px; height: 40px; background: var(--primary-yellow); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gray-900)">
-									<path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-									<path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-								</svg>
+						<div class="contact-express">
+							<div class="contact-phone-main">
+								<a href="tel:0607380194" class="phone-link-footer">
+									<strong>06 07 38 01 94</strong>
+								</a>
+								<p class="phone-subtitle">Épaviste 7j/7 de 6h à minuit</p>
 							</div>
-							<div>
-								<p style="color: #D1D5DB; margin: 0; font-weight: 600;">Île-de-France</p>
-								<p style="color: #9CA3AF; margin: 0; font-size: 0.875rem;">75, 77, 78, 91, 92, 93, 94, 95</p>
+							
+							<div class="contact-email-main">
+								<span class="contact-icon-footer">✉️</span>
+								<div>
+									<strong>contact@speedepaviste.fr</strong>
+									<p class="email-subtitle">Réponse garantie sous 1h</p>
+								</div>
 							</div>
-						</div>
-						
-						<div style="background: rgba(255, 193, 7, 0.1); border: 1px solid var(--primary-yellow); border-radius: 8px; padding: 1rem; margin-top: 1.5rem;">
-							<p style="color: var(--primary-yellow); margin: 0; font-weight: 600; font-size: 0.875rem;">🏆 Épaviste Agréé VHU</p>
-							<p style="color: #D1D5DB; margin: 0; font-size: 0.875rem;">Certification officielle pour le traitement des véhicules hors d'usage</p>
+							
+							<div class="footer-highlights">
+								<div class="highlight-item">
+									<span class="highlight-icon">🌍</span>
+									<span><strong>Île-de-France Complète</strong><br>8 départements couverts</span>
+								</div>
+								
+								<div class="highlight-item">
+									<span class="highlight-icon">🏆</span>
+									<span><strong>Agrément VHU Officiel</strong><br>FR-123-456-789 - Certifié</span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
